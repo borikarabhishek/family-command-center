@@ -11,6 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as FamilyRouteImport } from './routes/family'
+import { Route as FinancialRouteImport } from './routes/financial'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as TasksRouteImport } from './routes/tasks'
+import { Route as VaultRouteImport } from './routes/vault'
+import { Route as FamilyIndexRouteImport } from './routes/family.index'
+import { Route as FamilyMemberIdRouteImport } from './routes/family.$memberId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +29,118 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FamilyRoute = FamilyRouteImport.update({
+  id: '/family',
+  path: '/family',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinancialRoute = FinancialRouteImport.update({
+  id: '/financial',
+  path: '/financial',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TasksRoute = TasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VaultRoute = VaultRouteImport.update({
+  id: '/vault',
+  path: '/vault',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FamilyIndexRoute = FamilyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FamilyRoute,
+} as any)
+const FamilyMemberIdRoute = FamilyMemberIdRouteImport.update({
+  id: '/$memberId',
+  path: '/$memberId',
+  getParentRoute: () => FamilyRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/family': typeof FamilyRouteWithChildren
+  '/financial': typeof FinancialRoute
+  '/services': typeof ServicesRoute
+  '/tasks': typeof TasksRoute
+  '/vault': typeof VaultRoute
+  '/family/$memberId': typeof FamilyMemberIdRoute
+  '/family/': typeof FamilyIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/financial': typeof FinancialRoute
+  '/services': typeof ServicesRoute
+  '/tasks': typeof TasksRoute
+  '/vault': typeof VaultRoute
+  '/family/$memberId': typeof FamilyMemberIdRoute
+  '/family': typeof FamilyIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/family': typeof FamilyRouteWithChildren
+  '/financial': typeof FinancialRoute
+  '/services': typeof ServicesRoute
+  '/tasks': typeof TasksRoute
+  '/vault': typeof VaultRoute
+  '/family/$memberId': typeof FamilyMemberIdRoute
+  '/family/': typeof FamilyIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/family'
+    | '/financial'
+    | '/services'
+    | '/tasks'
+    | '/vault'
+    | '/family/$memberId'
+    | '/family/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard'
-  id: '__root__' | '/' | '/dashboard'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/financial'
+    | '/services'
+    | '/tasks'
+    | '/vault'
+    | '/family/$memberId'
+    | '/family'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/family'
+    | '/financial'
+    | '/services'
+    | '/tasks'
+    | '/vault'
+    | '/family/$memberId'
+    | '/family/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
+  FamilyRoute: typeof FamilyRouteWithChildren
+  FinancialRoute: typeof FinancialRoute
+  ServicesRoute: typeof ServicesRoute
+  TasksRoute: typeof TasksRoute
+  VaultRoute: typeof VaultRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +159,79 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/family': {
+      id: '/family'
+      path: '/family'
+      fullPath: '/family'
+      preLoaderRoute: typeof FamilyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/financial': {
+      id: '/financial'
+      path: '/financial'
+      fullPath: '/financial'
+      preLoaderRoute: typeof FinancialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vault': {
+      id: '/vault'
+      path: '/vault'
+      fullPath: '/vault'
+      preLoaderRoute: typeof VaultRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/family/': {
+      id: '/family/'
+      path: '/'
+      fullPath: '/family/'
+      preLoaderRoute: typeof FamilyIndexRouteImport
+      parentRoute: typeof FamilyRoute
+    }
+    '/family/$memberId': {
+      id: '/family/$memberId'
+      path: '/$memberId'
+      fullPath: '/family/$memberId'
+      preLoaderRoute: typeof FamilyMemberIdRouteImport
+      parentRoute: typeof FamilyRoute
+    }
   }
 }
+
+interface FamilyRouteChildren {
+  FamilyMemberIdRoute: typeof FamilyMemberIdRoute
+  FamilyIndexRoute: typeof FamilyIndexRoute
+}
+
+const FamilyRouteChildren: FamilyRouteChildren = {
+  FamilyMemberIdRoute: FamilyMemberIdRoute,
+  FamilyIndexRoute: FamilyIndexRoute,
+}
+
+const FamilyRouteWithChildren =
+  FamilyRoute._addFileChildren(FamilyRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
+  FamilyRoute: FamilyRouteWithChildren,
+  FinancialRoute: FinancialRoute,
+  ServicesRoute: ServicesRoute,
+  TasksRoute: TasksRoute,
+  VaultRoute: VaultRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
