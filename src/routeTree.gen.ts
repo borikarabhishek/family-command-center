@@ -10,10 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as FamilyRouteImport } from './routes/family'
 import { Route as FinancialRouteImport } from './routes/financial'
+import { Route as MessagesRouteImport } from './routes/messages'
+import { Route as MoreRouteImport } from './routes/more'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as VaultRouteImport } from './routes/vault'
 import { Route as FamilyIndexRouteImport } from './routes/family.index'
@@ -22,6 +26,11 @@ import { Route as FamilyMemberIdRouteImport } from './routes/family.$memberId'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -39,9 +48,24 @@ const FinancialRoute = FinancialRouteImport.update({
   path: '/financial',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MessagesRoute = MessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoreRoute = MoreRouteImport.update({
+  id: '/more',
+  path: '/more',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TasksRoute = TasksRouteImport.update({
@@ -67,10 +91,14 @@ const FamilyMemberIdRoute = FamilyMemberIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/dashboard': typeof DashboardRoute
   '/family': typeof FamilyRouteWithChildren
   '/financial': typeof FinancialRoute
+  '/messages': typeof MessagesRoute
+  '/more': typeof MoreRoute
   '/services': typeof ServicesRoute
+  '/settings': typeof SettingsRoute
   '/tasks': typeof TasksRoute
   '/vault': typeof VaultRoute
   '/family/$memberId': typeof FamilyMemberIdRoute
@@ -78,9 +106,13 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/dashboard': typeof DashboardRoute
   '/financial': typeof FinancialRoute
+  '/messages': typeof MessagesRoute
+  '/more': typeof MoreRoute
   '/services': typeof ServicesRoute
+  '/settings': typeof SettingsRoute
   '/tasks': typeof TasksRoute
   '/vault': typeof VaultRoute
   '/family/$memberId': typeof FamilyMemberIdRoute
@@ -89,10 +121,14 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/dashboard': typeof DashboardRoute
   '/family': typeof FamilyRouteWithChildren
   '/financial': typeof FinancialRoute
+  '/messages': typeof MessagesRoute
+  '/more': typeof MoreRoute
   '/services': typeof ServicesRoute
+  '/settings': typeof SettingsRoute
   '/tasks': typeof TasksRoute
   '/vault': typeof VaultRoute
   '/family/$memberId': typeof FamilyMemberIdRoute
@@ -102,10 +138,14 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/calendar'
     | '/dashboard'
     | '/family'
     | '/financial'
+    | '/messages'
+    | '/more'
     | '/services'
+    | '/settings'
     | '/tasks'
     | '/vault'
     | '/family/$memberId'
@@ -113,9 +153,13 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/calendar'
     | '/dashboard'
     | '/financial'
+    | '/messages'
+    | '/more'
     | '/services'
+    | '/settings'
     | '/tasks'
     | '/vault'
     | '/family/$memberId'
@@ -123,10 +167,14 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/calendar'
     | '/dashboard'
     | '/family'
     | '/financial'
+    | '/messages'
+    | '/more'
     | '/services'
+    | '/settings'
     | '/tasks'
     | '/vault'
     | '/family/$memberId'
@@ -135,10 +183,14 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CalendarRoute: typeof CalendarRoute
   DashboardRoute: typeof DashboardRoute
   FamilyRoute: typeof FamilyRouteWithChildren
   FinancialRoute: typeof FinancialRoute
+  MessagesRoute: typeof MessagesRoute
+  MoreRoute: typeof MoreRoute
   ServicesRoute: typeof ServicesRoute
+  SettingsRoute: typeof SettingsRoute
   TasksRoute: typeof TasksRoute
   VaultRoute: typeof VaultRoute
 }
@@ -150,6 +202,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -173,11 +232,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FinancialRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/messages': {
+      id: '/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof MessagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/more': {
+      id: '/more'
+      path: '/more'
+      fullPath: '/more'
+      preLoaderRoute: typeof MoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tasks': {
@@ -226,10 +306,14 @@ const FamilyRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CalendarRoute: CalendarRoute,
   DashboardRoute: DashboardRoute,
   FamilyRoute: FamilyRouteWithChildren,
   FinancialRoute: FinancialRoute,
+  MessagesRoute: MessagesRoute,
+  MoreRoute: MoreRoute,
   ServicesRoute: ServicesRoute,
+  SettingsRoute: SettingsRoute,
   TasksRoute: TasksRoute,
   VaultRoute: VaultRoute,
 }
