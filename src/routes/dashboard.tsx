@@ -199,7 +199,7 @@ function Dashboard() {
           <div className="mt-3 grid grid-cols-2 gap-2">
             {quickActions.map((a) => (
               <Button key={a.label} variant="outline" size="sm" className="justify-start" asChild>
-                <Link to={a.to}>+ {a.label.replace("Add ", "").replace("Request ", "")}</Link>
+                <Link to={a.to}>{a.label}</Link>
               </Button>
             ))}
           </div>
