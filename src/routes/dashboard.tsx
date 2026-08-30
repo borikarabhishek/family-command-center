@@ -131,10 +131,11 @@ function Dashboard() {
                   stroke="var(--color-muted-foreground)"
                 />
                 <YAxis
-                  tickFormatter={(v: number) => `${(v / 1_00_00_000).toFixed(1)}Cr`}
+                  domain={["dataMin - 1500000", "dataMax + 800000"]}
+                  tickFormatter={(v: number) => `${(v / 1_00_00_000).toFixed(2)}Cr`}
                   tickLine={false}
                   axisLine={false}
-                  width={44}
+                  width={50}
                   fontSize={11}
                   stroke="var(--color-muted-foreground)"
                 />
