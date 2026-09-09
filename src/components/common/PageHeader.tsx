@@ -1,5 +1,20 @@
 import type { ReactNode } from "react";
 
+/**
+ * PageHeader component displays a page title, optional description, and action element.
+ * Provides consistent heading styling across all pages.
+ *
+ * @param title - Main page heading (required)
+ * @param description - Subtitle or page description (optional)
+ * @param action - Action button or element (optional, positioned on right)
+ *
+ * @example
+ * <PageHeader
+ *   title="Document Vault"
+ *   description="Every important family document in one place."
+ *   action={<Button>Upload document</Button>}
+ * />
+ */
 export function PageHeader({
   title,
   description,

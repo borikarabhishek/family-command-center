@@ -1,6 +1,25 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
+/**
+ * StatCard displays a single statistic or metric with a label and optional hint.
+ * Used on dashboards to show key family metrics at a glance.
+ *
+ * @param label - The statistic label (e.g., "Pending Tasks", "Documents")
+ * @param value - The numeric or text value to display (shown prominently)
+ * @param hint - Optional secondary text, trend, or context
+ * @param icon - Optional icon element to display alongside the stat
+ * @param emphasis - Optional flag to highlight this card (uses primary color)
+ *
+ * @example
+ * <StatCard
+ *   label="Pending Tasks"
+ *   value={5}
+ *   hint="2 new today"
+ *   icon={<ChecklistIcon />}
+ *   emphasis
+ * />
+ */
 export function StatCard({
   label,
   value,

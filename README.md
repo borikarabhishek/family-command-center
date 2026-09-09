@@ -1222,3 +1222,178 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+### Local Development Setup
+
+#### Prerequisites
+
+- **Node.js** 18+ (via nvm recommended)
+- **npm** 8+ or **Bun** (for faster installs)
+- **Git**
+
+#### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/borikarabhishek/family-command-center.git
+cd family-command-center
+
+# Install dependencies
+npm install  # or: bun install
+
+# Start development server
+npm run dev
+
+# Open browser to http://localhost:3000 (or displayed URL)
+```
+
+### Available Scripts
+
+#### Development
+
+```bash
+npm run dev           # Start dev server with hot reload
+npm run build         # Build for production
+npm run preview       # Preview production build locally
+npm run start         # Run production build
+```
+
+#### Code Quality
+
+```bash
+npm run lint          # Check code quality with ESLint
+npm run lint:fix      # Auto-fix linting issues
+npm run format        # Format code with Prettier
+npm run format:check  # Check if code is formatted
+npm run type-check    # Run TypeScript type checking
+```
+
+#### Testing (Phase 2+)
+
+```bash
+npm run test          # Run all tests once
+npm run test:watch    # Run tests in watch mode
+npm run test:coverage # Generate coverage report
+npm run test:ui       # Open Vitest UI dashboard
+```
+
+### Environment Variables
+
+Create a `.env.local` file in the project root (not committed):
+
+```env
+# Currently unused—prototype uses mock data
+# Ready for future backend integration
+
+# VITE_API_URL=http://localhost:3001
+# VITE_AUTH_PROVIDER=mock
+```
+
+### Folder Structure
+
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for a detailed breakdown:
+
+- `src/components/` — Reusable UI components
+- `src/routes/` — Page components and routing
+- `src/lib/` — Utility functions and validation
+- `src/data/` — Mock data and TypeScript types
+- `test/` — Test configuration
+- `ARCHITECTURE.md` — Full architecture documentation
+
+### Key Technologies
+
+- **React 19** — UI framework
+- **TypeScript 5.8** — Type safety
+- **TanStack Router 1.170** — Type-safe routing
+- **Tailwind CSS 4.2** — Styling
+- **Vite 8.1** — Build tool
+- **Vitest 1.6** — Testing
+- **Zod 3.24** — Validation
+- **Radix UI** — Accessible components
+
+### Design System
+
+All components follow the design system defined in Tailwind config:
+
+- **Colors**: primary, secondary, accent, destructive, warning, success, info
+- **Spacing**: 4px base unit (Tailwind standard)
+- **Typography**: Clean sans-serif hierarchy
+- **Accessibility**: ARIA labels, keyboard navigation, WCAG AA contrast
+
+See `src/styles.css` for global styles.
+
+### Mobile vs Desktop
+
+- **Mobile-first approach**: Design for mobile, enhance for desktop
+- **Breakpoints**: sm (640px), md (768px), lg (1024px), xl (1280px)
+- **Navigation**: Bottom nav on mobile, sidebar on desktop (AppShell component)
+
+### Common Development Tasks
+
+#### Add a new page
+
+1. Create route file in `src/routes/` (e.g., `src/routes/new-page.tsx`)
+2. Export component with proper layout
+3. Route automatically added to TanStack Router
+
+#### Add a new component
+
+1. Create in `src/components/` (ui/, common/, or layout/)
+2. Add JSDoc comments
+3. Import and use in routes
+
+#### Add form validation
+
+1. Define Zod schema in `src/lib/validation.ts`
+2. Import schema in component
+3. Use with React Hook Form
+
+#### Format code
+
+```bash
+npm run format      # Auto-format all files
+npm run lint:fix    # Fix linting issues
+```
+
+### Troubleshooting
+
+**Port already in use**
+```bash
+# Kill process on port 3000
+lsof -i :3000 | grep LISTEN | awk '{print $2}' | xargs kill -9
+npm run dev
+```
+
+**Dependencies not installed**
+```bash
+# Clear cache and reinstall
+rm -rf node_modules package-lock.json
+npm install
+npm run dev
+```
+
+**TypeScript errors**
+```bash
+npm run type-check  # Check all TypeScript errors
+npm run lint:fix    # Auto-fix auto-fixable issues
+```
+
+### Next Steps
+
+1. **Phase 2** — Code extraction and refactoring (in progress)
+2. **Phase 3** — Comprehensive testing setup
+3. **Phase 4** — Backend integration skeleton
+4. **Phase 5** — Real API connections
+
+For the full development plan, see the project [Audit Plan](./AUDIT_PLAN.md) and [Architecture](./ARCHITECTURE.md).
+
+### Support & Documentation
+
+- **Architecture**: See [ARCHITECTURE.md](./ARCHITECTURE.md)
+- **Audit Plan**: See [AUDIT_PLAN.md](./AUDIT_PLAN.md)
+- **Type Definitions**: `src/data/types.ts`
+- **Mock Data**: `src/data/demo.ts`
+
+---
+
+

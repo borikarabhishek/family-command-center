@@ -1,5 +1,22 @@
 import type { ReactNode } from "react";
 
+/**
+ * EmptyState displays a centered message when no content is available.
+ * Used when lists are empty, searches return no results, or no data is loaded.
+ *
+ * @param title - Main empty state title (e.g., "No documents found")
+ * @param description - Explanation of why the state is empty
+ * @param action - Optional action button or element to help user proceed
+ * @param icon - Optional icon to visually represent the empty state
+ *
+ * @example
+ * <EmptyState
+ *   title="No documents yet"
+ *   description="Upload your first family document to get started."
+ *   action={<Button>Upload document</Button>}
+ *   icon={<FolderIcon />}
+ * />
+ */
 export function EmptyState({
   title,
   description,

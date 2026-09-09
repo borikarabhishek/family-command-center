@@ -2,6 +2,11 @@ import { cn } from "@/lib/utils";
 
 type Tone = "neutral" | "success" | "warning" | "danger" | "info";
 
+/**
+ * Mapping of common status labels to visual tones
+ * Auto-detects the appropriate color based on the label text
+ * (e.g., "Verified" → success, "Expired" → danger)
+ */
 const toneMap: Record<string, Tone> = {
   Verified: "success",
   Completed: "success",
@@ -31,6 +36,19 @@ const toneClasses: Record<Tone, string> = {
   info: "bg-info/10 text-info border-info/25",
 };
 
+/**
+ * StatusBadge displays a colored status label with automatic tone detection.
+ * Used throughout the app to indicate document status, task priority, approval status, etc.
+ *
+ * @param label - The status text to display
+ * @param tone - Optional override for the visual tone (auto-detected if not provided)
+ * @param className - Optional additional CSS classes
+ *
+ * @example
+ * <StatusBadge label="Verified" />  // Green badge
+ * <StatusBadge label="Expired" />   // Red badge
+ * <StatusBadge label="In Progress" />  // Blue badge
+ */
 export function StatusBadge({
   label,
   tone,
