@@ -52,12 +52,14 @@ function TasksPage() {
         </TabsList>
 
         <TabsContent value="tasks" className="mt-4">
-          <div className="mb-3 flex flex-wrap gap-2">
+          <div className="mb-3 flex flex-wrap gap-2" role="group" aria-label="Filter tasks by status">
             {filters.map((f) => (
               <button
                 key={f}
                 type="button"
                 onClick={() => setFilter(f)}
+                aria-label={`Filter tasks by ${f}`}
+                aria-pressed={filter === f}
                 className={cn(
                   "rounded-full border px-3 py-1.5 text-xs transition-colors",
                   filter === f

@@ -82,12 +82,14 @@ function VaultPage() {
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
-        <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
+        <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1" role="group" aria-label="Filter documents by category">
           {categories.map((c) => (
             <button
               key={c}
               type="button"
               onClick={() => setCategory(c)}
+              aria-label={`Filter documents by ${c}`}
+              aria-pressed={category === c}
               className={cn(
                 "whitespace-nowrap rounded-full border px-3 py-1.5 text-xs transition-colors",
                 category === c

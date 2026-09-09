@@ -331,7 +331,7 @@ function Onboarding() {
               <p className="mt-1 text-sm text-muted-foreground">
                 Choose as many as apply. This shapes your dashboard.
               </p>
-              <div className="mt-6 flex flex-wrap gap-2">
+              <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Select priorities for your family">
                 {priorityOptions.map((p) => {
                   const selected = priorities.includes(p);
                   return (
@@ -339,6 +339,8 @@ function Onboarding() {
                       key={p}
                       type="button"
                       onClick={() => togglePriority(p)}
+                      aria-label={`${selected ? "Deselect" : "Select"} ${p} as a priority`}
+                      aria-pressed={selected}
                       className={cn(
                         "rounded-full border px-4 py-2 text-sm transition-colors",
                         selected
