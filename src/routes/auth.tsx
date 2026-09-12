@@ -133,7 +133,12 @@ function AuthPage() {
           setFullPhone(targetPhone);
           const result = await signInWithPhoneOtp(targetPhone);
           if (result.error) {
-            setStatusMessage({ type: "error", text: result.error.message });
+            const errorText =
+              result.error.message.toLowerCase().includes("unsupported phone provider") ||
+              result.error.message.toLowerCase().includes("provider")
+                ? "Phone/SMS provider is not enabled in your Supabase dashboard yet. Please configure an SMS provider (e.g. Twilio, MessageBird) under Authentication > Providers in Supabase, or sign in using Email & Password."
+                : result.error.message;
+            setStatusMessage({ type: "error", text: errorText });
           } else {
             setOtpSent(true);
             setStatusMessage({
