@@ -1328,6 +1328,12 @@ See `src/styles.css` for global styles.
 - **Breakpoints**: sm (640px), md (768px), lg (1024px), xl (1280px)
 - **Navigation**: Bottom nav on mobile, sidebar on desktop (AppShell component)
 
+### Progressive Web App
+
+FamilyOS is installable as a Progressive Web App (PWA) in production. The generated web manifest provides the application name, colors, standalone display mode, and install icons. A service worker precaches the production application shell and static assets, enabling the last visited version to load offline.
+
+To test installation locally, use a Chromium-based browser at `http://localhost:8080`; browsers treat localhost as a secure development origin. Deployed environments must use HTTPS. After a production build, use the browser install prompt or the install icon in the address bar. Service-worker caching intentionally excludes mock data mutations and future API calls; production API caching policies should be added only after those endpoints exist.
+
 ### Common Development Tasks
 
 #### Add a new page
@@ -1395,5 +1401,4 @@ For the full development plan, see the project [Audit Plan](./AUDIT_PLAN.md) and
 - **Mock Data**: `src/data/demo.ts`
 
 ---
-
 
