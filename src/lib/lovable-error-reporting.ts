@@ -39,8 +39,9 @@ function sanitizeMessage(error: unknown): string {
 }
 
 function sanitizeRoute(pathname: string): string {
-  return pathname
-    .split(/[?#]/, 1)[0]
+  const path = pathname.split(/[?#]/, 1)[0] ?? "";
+
+  return path
     .replace(/\/\d+(?=\/|$)/g, "/:id")
     .replace(/\/[0-9a-f]{8}-[0-9a-f-]{27,36}(?=\/|$)/gi, "/:id");
 }

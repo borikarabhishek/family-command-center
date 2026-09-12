@@ -6,14 +6,15 @@ import { StatusBadge } from "@/components/common/StatusBadge";
 import { EmptyState } from "@/components/common/EmptyState";
 import { DemoNotice } from "@/components/common/DemoNotice";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { demoMembers } from "@/data/demo";
 import {
-  demoAssets,
-  demoDocuments,
-  demoLiabilities,
-  demoMembers,
-  demoServiceRequests,
-  demoTasks,
-} from "@/data/demo";
+  getMemberAssets,
+  getMemberDocuments,
+  getMemberLiabilities,
+  getMemberServiceRequests,
+  getMemberTasks,
+  getOpenTasks,
+} from "@/data/demo.helpers";
 import { ageFromDOB, formatDateIN, formatINR, initials } from "@/lib/format";
 
 export const Route = createFileRoute("/family/$memberId")({
@@ -45,11 +46,11 @@ export const Route = createFileRoute("/family/$memberId")({
 
 function MemberProfile() {
   const { member } = Route.useLoaderData();
-  const docs = demoDocuments.filter((d) => d.ownerId === member.id);
-  const assets = demoAssets.filter((a) => a.ownerId === member.id);
-  const liabilities = demoLiabilities.filter((l) => l.ownerId === member.id);
-  const tasks = demoTasks.filter((t) => t.assigneeId === member.id || t.ownerId === member.id);
-  const services = demoServiceRequests.filter((s) => s.memberId === member.id);
+  const docs = getMemberDocuments(member.id);
+  const assets = getMemberAssets(member.id);
+  const liabilities = getMemberLiabilities(member.id);
+  const tasks = getMemberTasks(member.id);
+  const services = getMemberServiceRequests(member.id);
 
   return (
     <AppShell>
@@ -91,7 +92,7 @@ function MemberProfile() {
 
         <TabsContent value="overview" className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <Tile label="Documents" value={docs.length} />
-          <Tile label="Open tasks" value={tasks.filter((t) => t.status !== "Completed").length} />
+          <Tile label="Open tasks" value={getOpenTasks(member.id).length} />
           <Tile
             label="Assets held"
             value={formatINR(

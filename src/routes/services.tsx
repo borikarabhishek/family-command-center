@@ -6,6 +6,7 @@ import { StatusBadge } from "@/components/common/StatusBadge";
 import { DemoNotice } from "@/components/common/DemoNotice";
 import { Button } from "@/components/ui/button";
 import { demoProfessionals, demoServiceRequests, memberById } from "@/data/demo";
+import { SERVICE_CATEGORIES } from "@/data/constants";
 import { formatDateIN } from "@/lib/format";
 
 export const Route = createFileRoute("/services")({
@@ -27,21 +28,6 @@ export const Route = createFileRoute("/services")({
   component: ServicesPage,
 });
 
-const categories = [
-  "Legal",
-  "CA / Tax",
-  "Financial Planning",
-  "Insurance",
-  "Healthcare",
-  "Education",
-  "Travel",
-  "Real Estate",
-  "Property Management",
-  "Business",
-  "Compliance",
-  "Cybersecurity",
-];
-
 function ServicesPage() {
   return (
     <AppShell>
@@ -56,7 +42,7 @@ function ServicesPage() {
         role="group"
         aria-label="Service categories"
       >
-        {categories.map((c) => (
+        {SERVICE_CATEGORIES.map((c) => (
           <span
             key={c}
             className="whitespace-nowrap rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground"

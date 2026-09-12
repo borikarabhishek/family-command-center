@@ -17,15 +17,14 @@ import { StatusBadge } from "@/components/common/StatusBadge";
 import { DemoNotice } from "@/components/common/DemoNotice";
 import { Button } from "@/components/ui/button";
 import {
-  demoApprovals,
   demoDocuments,
   demoEvents,
   demoMembers,
-  demoTasks,
   memberById,
   netWorthTrend,
   totals,
 } from "@/data/demo";
+import { getOpenTasks, getPendingApprovals } from "@/data/demo.helpers";
 import { formatDateIN, formatINR, daysUntil } from "@/lib/format";
 
 export const Route = createFileRoute("/dashboard")({
@@ -63,8 +62,8 @@ function Dashboard() {
   const attention = demoDocuments.filter(
     (d) => d.status === "Expiring Soon" || d.status === "Expired",
   );
-  const openTasks = demoTasks.filter((t) => t.status !== "Completed");
-  const pendingApprovals = demoApprovals.filter((a) => a.status === "Pending");
+  const openTasks = getOpenTasks();
+  const pendingApprovals = getPendingApprovals();
 
   return (
     <AppShell>

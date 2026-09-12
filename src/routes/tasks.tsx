@@ -7,7 +7,9 @@ import { DemoNotice } from "@/components/common/DemoNotice";
 import { FilterButton } from "@/components/FilterButton";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { demoApprovals, demoTasks, memberById } from "@/data/demo";
+import { demoApprovals, memberById } from "@/data/demo";
+import { TASK_FILTERS, type TaskFilter } from "@/data/constants";
+import { getPendingApprovals, getTasksByStatus } from "@/data/demo.helpers";
 import { formatDateIN, formatINR } from "@/lib/format";
 
 export const Route = createFileRoute("/tasks")({
@@ -29,11 +31,10 @@ export const Route = createFileRoute("/tasks")({
   component: TasksPage,
 });
 
-const filters = ["All", "To Do", "In Progress", "Waiting", "Completed"];
-
 export function TasksPage() {
-  const [filter, setFilter] = useState("All");
-  const tasks = demoTasks.filter((t) => filter === "All" || t.status === filter);
+  const [filter, setFilter] = useState<TaskFilter>("All");
+  const tasks = getTasksByStatus(filter);
+  const pendingApprovals = getPendingApprovals();
 
   return (
     <AppShell>
@@ -46,9 +47,7 @@ export function TasksPage() {
       <Tabs defaultValue="tasks">
         <TabsList>
           <TabsTrigger value="tasks">Tasks</TabsTrigger>
-          <TabsTrigger value="approvals">
-            Approvals ({demoApprovals.filter((a) => a.status === "Pending").length})
-          </TabsTrigger>
+          <TabsTrigger value="approvals">Approvals ({pendingApprovals.length})</TabsTrigger>
         </TabsList>
 
         <TabsContent value="tasks" className="mt-4">
@@ -57,7 +56,7 @@ export function TasksPage() {
             role="group"
             aria-label="Filter tasks by status"
           >
-            {filters.map((f) => (
+            {TASK_FILTERS.map((f) => (
               <FilterButton
                 key={f}
                 label={f}

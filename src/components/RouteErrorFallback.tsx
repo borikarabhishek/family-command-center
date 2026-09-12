@@ -1,4 +1,3 @@
-import { useRouteContext } from "@tanstack/react-router";
 import { AlertCircle, Home, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -30,7 +29,7 @@ export function RouteErrorFallback({ error }: { error: Error }) {
           <p className="text-sm text-muted-foreground">
             The page you're looking for doesn't exist or encountered an error.
           </p>
-          {process.env.NODE_ENV === "development" && (
+          {import.meta.env.DEV && (
             <details className="text-xs">
               <summary className="cursor-pointer font-mono text-destructive hover:underline">
                 Error details

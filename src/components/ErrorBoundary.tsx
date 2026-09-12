@@ -31,7 +31,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error, errorInfo: { componentStack: string }) {
+  override componentDidCatch(error: Error, errorInfo: { componentStack: string }) {
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
     }
@@ -42,7 +42,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
     this.setState({ hasError: false, error: null });
   };
 
-  render() {
+  override render() {
     if (this.state.hasError && this.state.error) {
       if (this.props.fallback) {
         return this.props.fallback(this.state.error, this.resetError);
@@ -77,7 +77,7 @@ export function DefaultErrorFallback({
           <p className="text-sm text-muted-foreground">
             An unexpected error occurred. We're sorry for the inconvenience.
           </p>
-          {process.env.NODE_ENV === "development" && (
+          {import.meta.env.DEV && (
             <details className="text-xs">
               <summary className="cursor-pointer font-mono text-destructive hover:underline">
                 Error details

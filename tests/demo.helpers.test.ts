@@ -5,14 +5,25 @@ import {
   getMemberAssetValue,
   getMemberAssets,
   getMemberDocuments,
+  getMemberLiabilities,
   getMemberName,
   getMemberPendingTasks,
+  getMemberServiceRequests,
   getMemberStats,
   getMemberTasks,
+  getOpenTasks,
+  getPendingApprovals,
   getTasksByStatus,
   searchDocuments,
 } from "@/data/demo.helpers";
-import { demoAssets, demoDocuments, demoTasks } from "@/data/demo";
+import {
+  demoApprovals,
+  demoAssets,
+  demoDocuments,
+  demoLiabilities,
+  demoServiceRequests,
+  demoTasks,
+} from "@/data/demo";
 
 describe("demo data helpers", () => {
   afterEach(() => {
@@ -24,7 +35,7 @@ describe("demo data helpers", () => {
     vi.setSystemTime(new Date("2026-09-01T00:00:00Z"));
   });
 
-  it("returns member-scoped documents, tasks, and assets", () => {
+  it("returns member-scoped records", () => {
     expect(getMemberDocuments("mem_2")).toEqual(
       demoDocuments.filter((document) => document.ownerId === "mem_2"),
     );
@@ -33,6 +44,12 @@ describe("demo data helpers", () => {
     );
     expect(getMemberAssets("mem_2")).toEqual(
       demoAssets.filter((asset) => asset.ownerId === "mem_2"),
+    );
+    expect(getMemberLiabilities("mem_2")).toEqual(
+      demoLiabilities.filter((liability) => liability.ownerId === "mem_2"),
+    );
+    expect(getMemberServiceRequests("mem_2")).toEqual(
+      demoServiceRequests.filter((request) => request.memberId === "mem_2"),
     );
   });
 
@@ -61,6 +78,15 @@ describe("demo data helpers", () => {
           task.status === "To Do" && (task.assigneeId === "mem_2" || task.ownerId === "mem_2"),
       ),
     ).toBe(true);
+  });
+
+  it("returns all tasks for the All filter and centralizes pending work", () => {
+    expect(getTasksByStatus("All")).toEqual(demoTasks);
+    expect(getOpenTasks()).not.toContainEqual(expect.objectContaining({ status: "Completed" }));
+    expect(getOpenTasks("mem_2")).toEqual(getMemberPendingTasks("mem_2"));
+    expect(getPendingApprovals()).toEqual(
+      demoApprovals.filter((approval) => approval.status === "Pending"),
+    );
   });
 
   it("filters documents by category and owner", () => {

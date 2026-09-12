@@ -118,19 +118,7 @@ export interface Approval {
   detail: string;
 }
 
-export type ServiceCategory =
-  | "Legal"
-  | "CA / Tax"
-  | "Financial Planning"
-  | "Insurance"
-  | "Healthcare"
-  | "Education"
-  | "Travel"
-  | "Real Estate"
-  | "Property Management"
-  | "Business"
-  | "Compliance"
-  | "Cybersecurity";
+export type ServiceCategory = (typeof SERVICE_CATEGORIES)[number];
 
 export interface Professional {
   id: string;
@@ -175,3 +163,4 @@ export interface Conversation {
   lastAt: string;
   unread: number;
 }
+import type { SERVICE_CATEGORIES } from "./constants";

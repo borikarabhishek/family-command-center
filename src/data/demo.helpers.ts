@@ -4,14 +4,23 @@
  */
 
 import {
+  demoApprovals,
   demoDocuments,
-  demoTasks,
   demoAssets,
+  demoLiabilities,
   demoMembers,
-  type FamilyDocument,
-  type FamilyTask,
-  type Asset,
+  demoServiceRequests,
+  demoTasks,
 } from "@/data/demo";
+import type {
+  Approval,
+  Asset,
+  FamilyDocument,
+  FamilyTask,
+  Liability,
+  ServiceRequest,
+  TaskStatus,
+} from "@/data/types";
 
 /**
  * Get all documents owned by a family member
@@ -68,6 +77,20 @@ export function getMemberAssets(memberId: string): Asset[] {
 }
 
 /**
+ * Get all liabilities associated with a family member.
+ */
+export function getMemberLiabilities(memberId: string): Liability[] {
+  return demoLiabilities.filter((liability) => liability.ownerId === memberId);
+}
+
+/**
+ * Get all service requests associated with a family member.
+ */
+export function getMemberServiceRequests(memberId: string): ServiceRequest[] {
+  return demoServiceRequests.filter((serviceRequest) => serviceRequest.memberId === memberId);
+}
+
+/**
  * Get total asset value for a member
  * @param memberId - The member's ID
  * @returns Total value of all assets
@@ -101,14 +124,29 @@ export function getMemberName(memberId: string, fallback: string = "Unknown"): s
  * @param status - The task status to filter by
  * @returns Array of tasks with matching status
  */
-export function getTasksByStatus(status: string, memberId?: string): FamilyTask[] {
-  let tasks = demoTasks.filter((t) => t.status === status);
+export function getTasksByStatus(status: TaskStatus | "All", memberId?: string): FamilyTask[] {
+  let tasks = status === "All" ? demoTasks : demoTasks.filter((task) => task.status === status);
 
   if (memberId) {
     tasks = tasks.filter((t) => t.assigneeId === memberId || t.ownerId === memberId);
   }
 
   return tasks;
+}
+
+/**
+ * Get all non-completed tasks, optionally scoped to a family member.
+ */
+export function getOpenTasks(memberId?: string): FamilyTask[] {
+  const tasks = memberId ? getMemberTasks(memberId) : demoTasks;
+  return tasks.filter((task) => task.status !== "Completed");
+}
+
+/**
+ * Get approvals awaiting a family owner's decision.
+ */
+export function getPendingApprovals(): Approval[] {
+  return demoApprovals.filter((approval) => approval.status === "Pending");
 }
 
 /**

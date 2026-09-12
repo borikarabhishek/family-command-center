@@ -92,6 +92,10 @@ export const TASK_STATUS = ["To Do", "In Progress", "Waiting", "Completed"] as c
 
 export type TaskStatus = (typeof TASK_STATUS)[number];
 
+export const TASK_FILTERS = ["All", ...TASK_STATUS] as const;
+
+export type TaskFilter = (typeof TASK_FILTERS)[number];
+
 export const APPROVAL_STATUS = ["Pending", "Approved", "Rejected", "Withdrawn"] as const;
 
 export type ApprovalStatus = (typeof APPROVAL_STATUS)[number];
@@ -117,14 +121,18 @@ export type DocumentStatus = (typeof DOCUMENT_STATUS)[number];
 // ============================================================================
 
 export const SERVICE_CATEGORIES = [
-  "Tax Planning",
-  "Legal Advice",
+  "Legal",
+  "CA / Tax",
   "Financial Planning",
   "Insurance",
-  "Estate Planning",
+  "Healthcare",
+  "Education",
+  "Travel",
   "Real Estate",
-  "Accounting",
-  "Investment Management",
+  "Property Management",
+  "Business",
+  "Compliance",
+  "Cybersecurity",
 ] as const;
 
 export type ServiceCategory = (typeof SERVICE_CATEGORIES)[number];
