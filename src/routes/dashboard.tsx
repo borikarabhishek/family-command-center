@@ -55,7 +55,7 @@ const quickActions = [
   { label: "Add liability", to: "/financial" },
 ] as const;
 
-function Dashboard() {
+export function Dashboard() {
   const upcoming = [...demoEvents].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
   );

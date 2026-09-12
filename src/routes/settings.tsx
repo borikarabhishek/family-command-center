@@ -1,5 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { LogOut } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { PageHeader } from "@/components/common/PageHeader";
 import { DemoNotice } from "@/components/common/DemoNotice";
@@ -7,6 +8,8 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { demoFamily, demoMembers } from "@/data/demo";
+import { signOut } from "@/integrations/supabase/auth";
+import { AuthProvider, useAuth } from "@/integrations/supabase/AuthProvider";
 
 export const Route = createFileRoute("/settings")({
   head: () => ({
@@ -24,19 +27,51 @@ export const Route = createFileRoute("/settings")({
       },
     ],
   }),
-  component: SettingsPage,
+  component: SettingsRoute,
 });
 
-function SettingsPage() {
+function SettingsRoute() {
+  return (
+    <AuthProvider>
+      <SettingsPage />
+    </AuthProvider>
+  );
+}
+
+export function SettingsPage() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [twoFactor, setTwoFactor] = useState(true);
   const [biometric, setBiometric] = useState(false);
   const [sharing, setSharing] = useState(true);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    try {
+      await signOut();
+    } finally {
+      await navigate({ to: "/auth" });
+    }
+  };
 
   return (
     <AppShell>
       <PageHeader
         title="Settings"
         description="Family profile, permissions and security controls."
+        action={
+          <Button
+            variant="outline"
+            size="sm"
+            className="text-destructive hover:bg-destructive/10"
+            onClick={handleSignOut}
+            disabled={isSigningOut}
+          >
+            <LogOut className="mr-2 size-4" />
+            {isSigningOut ? "Signing out…" : user ? "Sign out" : "Exit demo"}
+          </Button>
+        }
       />
 
       <div className="grid gap-4 lg:grid-cols-2">
@@ -47,6 +82,7 @@ function SettingsPage() {
             <Row label="City" value={demoFamily.city} />
             <Row label="Preferred language" value={demoFamily.language} />
             <Row label="Members" value={String(demoMembers.length)} />
+            {user ? <Row label="Account email" value={user.email ?? "Active user"} /> : null}
           </dl>
         </section>
 
@@ -74,9 +110,20 @@ function SettingsPage() {
               checked={sharing}
               onChange={setSharing}
             />
-            <Button variant="outline" size="sm">
-              Manage active sessions
-            </Button>
+            <div className="flex gap-2 pt-2">
+              <Button variant="outline" size="sm">
+                Manage active sessions
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-destructive"
+                onClick={handleSignOut}
+                disabled={isSigningOut}
+              >
+                {user ? "Sign out of account" : "Exit demo mode"}
+              </Button>
+            </div>
           </div>
         </section>
 

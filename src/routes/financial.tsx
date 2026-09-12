@@ -34,7 +34,7 @@ const palette = [
   "var(--color-chart-5)",
 ];
 
-function FinancialPage() {
+export function FinancialPage() {
   const byCategory = Object.entries(
     demoAssets.reduce<Record<string, number>>((acc, a) => {
       acc[a.category] = (acc[a.category] ?? 0) + a.value;

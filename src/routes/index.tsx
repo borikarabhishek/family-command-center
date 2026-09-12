@@ -52,7 +52,7 @@ function OnboardingRoute() {
   );
 }
 
-function Onboarding() {
+export function Onboarding() {
   const navigate = useNavigate();
   const { isConfigured, user } = useAuth();
   const [step, setStep] = useState(0);
