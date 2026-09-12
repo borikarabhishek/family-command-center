@@ -88,18 +88,27 @@ function Onboarding() {
     setSubmissionError(null);
 
     try {
+      const resolvedFamilyName = familyName.trim() || "My Family";
+      const resolvedCity = city.trim() || "Pune";
+      const resolvedPrimaryName = primary.trim() || user.email?.split("@")[0] || "Primary Member";
+
       await createFamilyWorkspace({
-        familyName,
-        city,
-        language,
-        priorities,
-        primaryMemberName: primary,
+        familyName: resolvedFamilyName,
+        city: resolvedCity,
+        language: language || "English",
+        priorities: priorities.length > 0 ? priorities : ["Document management"],
+        primaryMemberName: resolvedPrimaryName,
       });
       await navigate({ to: "/dashboard" });
     } catch (error) {
-      setSubmissionError(
-        error instanceof Error ? error.message : "Unable to create your family workspace.",
-      );
+      const msg = error instanceof Error ? error.message : "Unable to create your family workspace.";
+      if (msg.includes("function public.create_family_workspace") || msg.includes("does not exist") || msg.includes("schema")) {
+        setSubmissionError(
+          "Supabase tables and functions are not created yet. Please run the SQL migration located in supabase/migrations/20260912140000_initial_familyos_schema.sql in your Supabase SQL Editor.",
+        );
+      } else {
+        setSubmissionError(msg);
+      }
     } finally {
       setIsSubmitting(false);
     }
