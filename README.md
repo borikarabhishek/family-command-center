@@ -1297,15 +1297,39 @@ npm run test:ui       # Open Vitest UI dashboard
 
 ### Environment Variables
 
-Create a `.env.local` file in the project root (not committed):
+Copy `.env.example` to `.env.local` and add the publishable values from
+**Supabase Dashboard → Project Settings → API**:
 
 ```env
-# Currently unused—prototype uses mock data
-# Ready for future backend integration
-
-# VITE_API_URL=http://localhost:3001
-# VITE_AUTH_PROVIDER=mock
+VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 ```
+
+The publishable key is designed for browser use. Never add a `service_role` or
+secret key to `.env.local`, client code, or source control.
+
+### Supabase Backend
+
+FamilyOS uses Supabase Auth for email/password sessions and PostgreSQL for
+family workspaces. The schema is versioned in
+`supabase/migrations/20260912140000_initial_familyos_schema.sql`.
+
+1. In **Supabase Dashboard → SQL Editor**, paste and run the migration file.
+2. In **Authentication → URL Configuration**, add `http://localhost:8080` as a
+   redirect URL for local development and add the production URL before deploy.
+3. Enable email/password sign-in in **Authentication → Providers**. If email
+   confirmation is enabled, users must verify their email before signing in.
+4. Run the app and open `/auth` to create an account. The final onboarding step
+   creates the authenticated user's family workspace through an atomic RPC.
+
+All application tables use Row Level Security. Authenticated users can read
+only records belonging to a family where they are a member; `Owner` and
+`Member` permissions govern data changes, while family-roster changes require
+an `Owner`.
+
+The dashboard and remaining screens continue to display fixture data while
+their read/write repositories are migrated. The Supabase integration lives in
+`src/integrations/supabase/` and is the required boundary for new backend work.
 
 ### Folder Structure
 

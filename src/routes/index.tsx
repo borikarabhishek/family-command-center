@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { FAMILY_ROLES, LANGUAGES, PRIORITY_OPTIONS, RELATIONSHIPS } from "@/data/constants";
+import { AuthProvider, useAuth } from "@/integrations/supabase/AuthProvider";
+import { createFamilyWorkspace } from "@/integrations/supabase/family.repository";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -31,7 +33,7 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
-  component: Onboarding,
+  component: OnboardingRoute,
 });
 
 interface MemberDraft {
@@ -42,8 +44,17 @@ interface MemberDraft {
   role: string;
 }
 
+function OnboardingRoute() {
+  return (
+    <AuthProvider>
+      <Onboarding />
+    </AuthProvider>
+  );
+}
+
 function Onboarding() {
   const navigate = useNavigate();
+  const { isConfigured, user } = useAuth();
   const [step, setStep] = useState(0);
   const [familyName, setFamilyName] = useState("");
   const [primary, setPrimary] = useState("");
@@ -57,13 +68,42 @@ function Onboarding() {
     "Financial organization",
     "Document management",
   ]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
 
   const steps = ["Welcome", "Household", "Members", "Priorities"];
 
   const togglePriority = (p: string) =>
     setPriorities((prev) => (prev.includes(p) ? prev.filter((x) => x !== p) : [...prev, p]));
 
-  const finish = () => navigate({ to: "/dashboard" });
+  const exploreDemo = () => navigate({ to: "/dashboard" });
+
+  const finish = async () => {
+    if (!isConfigured || !user) {
+      await navigate({ to: "/auth" });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmissionError(null);
+
+    try {
+      await createFamilyWorkspace({
+        familyName,
+        city,
+        language,
+        priorities,
+        primaryMemberName: primary,
+      });
+      await navigate({ to: "/dashboard" });
+    } catch (error) {
+      setSubmissionError(
+        error instanceof Error ? error.message : "Unable to create your family workspace.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -75,7 +115,7 @@ function Onboarding() {
               Your family&apos;s private operating system.
             </p>
           </div>
-          <Button variant="ghost" size="sm" onClick={finish}>
+          <Button variant="ghost" size="sm" onClick={exploreDemo}>
             Explore demo family
           </Button>
         </header>
@@ -361,7 +401,20 @@ function Onboarding() {
               Continue <ArrowRight className="size-4" />
             </Button>
           ) : (
-            <Button onClick={finish}>Set up my FamilyOS</Button>
+            <div className="flex flex-col items-end gap-2">
+              {submissionError ? (
+                <p role="alert" className="max-w-sm text-right text-sm text-destructive">
+                  {submissionError}
+                </p>
+              ) : null}
+              <Button onClick={finish} disabled={isSubmitting}>
+                {isSubmitting
+                  ? "Creating workspace…"
+                  : user
+                    ? "Set up my FamilyOS"
+                    : "Sign in to save setup"}
+              </Button>
+            </div>
           )}
         </div>
       </div>
