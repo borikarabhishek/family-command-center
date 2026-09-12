@@ -72,7 +72,13 @@ function FinancialPage() {
           <div className="mt-2 h-56">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie data={byCategory} dataKey="value" nameKey="name" innerRadius={52} outerRadius={82}>
+                <Pie
+                  data={byCategory}
+                  dataKey="value"
+                  nameKey="name"
+                  innerRadius={52}
+                  outerRadius={82}
+                >
                   {byCategory.map((_, i) => (
                     <Cell key={i} fill={palette[i % palette.length]} />
                   ))}

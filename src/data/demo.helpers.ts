@@ -28,9 +28,7 @@ export function getMemberDocuments(memberId: string): FamilyDocument[] {
  * @returns Array of tasks for this member
  */
 export function getMemberTasks(memberId: string): FamilyTask[] {
-  return demoTasks.filter(
-    (task) => task.assigneeId === memberId || task.ownerId === memberId
-  );
+  return demoTasks.filter((task) => task.assigneeId === memberId || task.ownerId === memberId);
 }
 
 /**
@@ -103,16 +101,11 @@ export function getMemberName(memberId: string, fallback: string = "Unknown"): s
  * @param status - The task status to filter by
  * @returns Array of tasks with matching status
  */
-export function getTasksByStatus(
-  status: string,
-  memberId?: string
-): FamilyTask[] {
+export function getTasksByStatus(status: string, memberId?: string): FamilyTask[] {
   let tasks = demoTasks.filter((t) => t.status === status);
 
   if (memberId) {
-    tasks = tasks.filter(
-      (t) => t.assigneeId === memberId || t.ownerId === memberId
-    );
+    tasks = tasks.filter((t) => t.assigneeId === memberId || t.ownerId === memberId);
   }
 
   return tasks;
@@ -124,10 +117,7 @@ export function getTasksByStatus(
  * @param memberId - Optional member ID to filter by owner
  * @returns Array of documents matching filter
  */
-export function getDocumentsByCategory(
-  category: string,
-  memberId?: string
-): FamilyDocument[] {
+export function getDocumentsByCategory(category: string, memberId?: string): FamilyDocument[] {
   let docs = demoDocuments.filter((d) => d.category === category || category === "All");
 
   if (memberId) {
@@ -143,15 +133,10 @@ export function getDocumentsByCategory(
  * @param category - Optional category filter
  * @returns Array of documents matching search
  */
-export function searchDocuments(
-  query: string,
-  category?: string
-): FamilyDocument[] {
+export function searchDocuments(query: string, category?: string): FamilyDocument[] {
   const lowerQuery = query.toLowerCase();
 
-  let docs = demoDocuments.filter((d) =>
-    d.name.toLowerCase().includes(lowerQuery)
-  );
+  let docs = demoDocuments.filter((d) => d.name.toLowerCase().includes(lowerQuery));
 
   if (category && category !== "All") {
     docs = docs.filter((d) => d.category === category);

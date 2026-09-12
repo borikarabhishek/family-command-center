@@ -5,7 +5,8 @@ import { PageHeader } from "@/components/common/PageHeader";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { DemoNotice } from "@/components/common/DemoNotice";
 import { Button } from "@/components/ui/button";
-import { demoDocuments, demoFamily, demoMembers, demoTasks } from "@/data/demo";
+import { demoFamily, demoMembers } from "@/data/demo";
+import { getMemberDocumentCount, getMemberPendingTaskCount } from "@/data/demo.helpers";
 import { ageFromDOB, initials } from "@/lib/format";
 
 export const Route = createFileRoute("/family/")({
@@ -42,10 +43,8 @@ function FamilyPage() {
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         {demoMembers.map((m) => {
-          const docs = demoDocuments.filter((d) => d.ownerId === m.id).length;
-          const tasks = demoTasks.filter(
-            (t) => t.assigneeId === m.id && t.status !== "Completed",
-          ).length;
+          const docs = getMemberDocumentCount(m.id);
+          const tasks = getMemberPendingTaskCount(m.id);
           return (
             <Link
               key={m.id}

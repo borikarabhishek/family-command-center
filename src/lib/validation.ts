@@ -14,7 +14,9 @@ export const OnboardingWelcomeSchema = z.object({
     .string()
     .min(2, { message: "Family name must be at least 2 characters" })
     .max(100, { message: "Family name must be less than 100 characters" })
-    .regex(/^[a-zA-Z\s'-]+$/, { message: "Family name can only contain letters, spaces, hyphens, and apostrophes" }),
+    .regex(/^[a-zA-Z\s'-]+$/, {
+      message: "Family name can only contain letters, spaces, hyphens, and apostrophes",
+    }),
   city: z
     .string()
     .min(2, { message: "City must be at least 2 characters" })
@@ -30,12 +32,9 @@ export const FamilyMemberSchema = z.object({
     .string()
     .min(2, { message: "Name must be at least 2 characters" })
     .max(100, { message: "Name must be less than 100 characters" }),
-  relationship: z.enum(
-    ["Self", "Spouse", "Son", "Daughter", "Mother", "Father", "Other"],
-    {
-      errorMap: () => ({ message: "Please select a valid relationship" }),
-    }
-  ),
+  relationship: z.enum(["Self", "Spouse", "Son", "Daughter", "Mother", "Father", "Other"], {
+    errorMap: () => ({ message: "Please select a valid relationship" }),
+  }),
   dob: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
     message: "Date of birth must be in YYYY-MM-DD format",
   }),
@@ -67,7 +66,7 @@ export const OnboardingPrioritiesSchema = z.object({
 });
 
 export const CompleteOnboardingSchema = OnboardingWelcomeSchema.merge(
-  OnboardingMembersSchema
+  OnboardingMembersSchema,
 ).merge(OnboardingPrioritiesSchema);
 
 // ============================================================================
@@ -105,7 +104,10 @@ export type TaskFilter = z.infer<typeof TaskFilterSchema>;
  * Utility to safely parse and validate data
  * Returns { success: true, data } or { success: false, error }
  */
-export function validateData<T>(schema: z.Schema, data: unknown): { success: boolean; data?: T; error?: z.ZodError } {
+export function validateData<T>(
+  schema: z.Schema,
+  data: unknown,
+): { success: boolean; data?: T; error?: z.ZodError } {
   const result = schema.safeParse(data);
   if (result.success) {
     return { success: true, data: result.data as T };

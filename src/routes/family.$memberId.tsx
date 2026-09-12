@@ -112,7 +112,10 @@ function MemberProfile() {
           {docs.length ? (
             <ul className="surface divide-y divide-border">
               {docs.map((d) => (
-                <li key={d.id} className="flex items-center justify-between gap-3 px-4 py-3 text-sm">
+                <li
+                  key={d.id}
+                  className="flex items-center justify-between gap-3 px-4 py-3 text-sm"
+                >
                   <div>
                     <p className="font-medium">{d.name}</p>
                     <p className="text-xs text-muted-foreground">
@@ -159,7 +162,10 @@ function MemberProfile() {
           {tasks.length ? (
             <ul className="surface divide-y divide-border">
               {tasks.map((t) => (
-                <li key={t.id} className="flex items-center justify-between gap-3 px-4 py-3 text-sm">
+                <li
+                  key={t.id}
+                  className="flex items-center justify-between gap-3 px-4 py-3 text-sm"
+                >
                   <div>
                     <p className="font-medium">{t.title}</p>
                     <p className="text-xs text-muted-foreground">Due {formatDateIN(t.dueDate)}</p>
@@ -177,7 +183,10 @@ function MemberProfile() {
           {services.length ? (
             <ul className="surface divide-y divide-border">
               {services.map((s) => (
-                <li key={s.id} className="flex items-center justify-between gap-3 px-4 py-3 text-sm">
+                <li
+                  key={s.id}
+                  className="flex items-center justify-between gap-3 px-4 py-3 text-sm"
+                >
                   <div>
                     <p className="font-medium">{s.summary}</p>
                     <p className="text-xs text-muted-foreground">

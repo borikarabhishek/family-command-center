@@ -22,13 +22,22 @@ Object.defineProperty(window, "matchMedia", {
   })),
 });
 
-// Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
+class MockIntersectionObserver implements IntersectionObserver {
+  readonly root: Element | Document | null = null;
+  readonly rootMargin = "";
+  readonly thresholds: readonly number[] = [];
+
+  constructor(_callback: IntersectionObserverCallback, _options?: IntersectionObserverInit) {}
+
   disconnect() {}
-  observe() {}
-  takeRecords() {
+
+  observe(_target: Element) {}
+
+  takeRecords(): IntersectionObserverEntry[] {
     return [];
   }
-  unobserve() {}
-} as any;
+
+  unobserve(_target: Element) {}
+}
+
+global.IntersectionObserver = MockIntersectionObserver;

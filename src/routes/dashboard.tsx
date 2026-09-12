@@ -79,14 +79,22 @@ function Dashboard() {
       />
 
       <section className="grid grid-cols-2 gap-3 lg:grid-cols-5">
-        <StatCard label="Family members" value={demoMembers.length} icon={<Users className="size-4" />} />
+        <StatCard
+          label="Family members"
+          value={demoMembers.length}
+          icon={<Users className="size-4" />}
+        />
         <StatCard
           label="Documents"
           value={demoDocuments.length}
           hint={`${attention.length} need attention`}
           icon={<FileText className="size-4" />}
         />
-        <StatCard label="Active tasks" value={openTasks.length} icon={<ListChecks className="size-4" />} />
+        <StatCard
+          label="Active tasks"
+          value={openTasks.length}
+          icon={<ListChecks className="size-4" />}
+        />
         <StatCard
           label="Upcoming deadlines"
           value={upcoming.filter((e) => daysUntil(e.date) <= 30).length}
@@ -160,7 +168,10 @@ function Dashboard() {
           </div>
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
             <Figure label="Total assets" value={formatINR(totals.assets, { compact: true })} />
-            <Figure label="Total liabilities" value={formatINR(totals.liabilities, { compact: true })} />
+            <Figure
+              label="Total liabilities"
+              value={formatINR(totals.liabilities, { compact: true })}
+            />
             <Figure label="Net worth" value={formatINR(totals.netWorth, { compact: true })} />
             <Figure
               label="Monthly obligations"

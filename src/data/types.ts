@@ -5,10 +5,7 @@
  */
 
 export type MemberRole =
-  | "Family Owner"
-  | "Family Member"
-  | "Dependent"
-  | "Authorized Representative";
+  "Family Owner" | "Family Member" | "Dependent" | "Authorized Representative";
 
 export type PermissionLevel = "Owner" | "Member" | "Viewer" | "Authorized Representative";
 
@@ -49,11 +46,7 @@ export type AssetCategory =
   | "Other assets";
 
 export type LiabilityCategory =
-  | "Home loan"
-  | "Personal loan"
-  | "Credit card"
-  | "Education loan"
-  | "Other liabilities";
+  "Home loan" | "Personal loan" | "Credit card" | "Education loan" | "Other liabilities";
 
 export interface Asset {
   id: string;
@@ -152,11 +145,7 @@ export interface Professional {
 }
 
 export type ServiceRequestStatus =
-  | "Created"
-  | "Professional Assigned"
-  | "Awaiting Family Approval"
-  | "In Progress"
-  | "Completed";
+  "Created" | "Professional Assigned" | "Awaiting Family Approval" | "In Progress" | "Completed";
 
 export interface ServiceRequest {
   id: string;

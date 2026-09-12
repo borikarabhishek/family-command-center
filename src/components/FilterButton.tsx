@@ -63,9 +63,7 @@ export function FilterButton({
   category,
   variant = "pill",
 }: FilterButtonProps) {
-  const defaultAriaLabel = category
-    ? `Filter by ${label} ${category}`
-    : `Filter by ${label}`;
+  const defaultAriaLabel = category ? `Filter by ${label} ${category}` : `Filter by ${label}`;
 
   const buttonAriaLabel = ariaLabel || defaultAriaLabel;
 
@@ -83,7 +81,7 @@ export function FilterButton({
         isActive
           ? "border-accent bg-accent/15 text-foreground"
           : "border-border text-muted-foreground hover:border-accent/50",
-        className
+        className,
       )}
     >
       {label}

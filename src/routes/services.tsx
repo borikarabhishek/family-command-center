@@ -51,7 +51,11 @@ function ServicesPage() {
         action={<Button>Request a service</Button>}
       />
 
-      <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-2" role="group" aria-label="Service categories">
+      <div
+        className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-2"
+        role="group"
+        aria-label="Service categories"
+      >
         {categories.map((c) => (
           <span
             key={c}

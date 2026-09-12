@@ -45,39 +45,39 @@
 
 ### Frontend
 
-| Layer | Technology | Version | Purpose |
-|-------|-----------|---------|---------|
-| **Language** | TypeScript | 5.8.3 | Type safety & developer experience |
-| **UI Framework** | React | 19.2.0 | Component-based UI |
-| **Routing** | TanStack Router | 1.170.18 | Type-safe SPA routing |
-| **Build Tool** | Vite | 8.1.5 | Fast bundling & dev server |
-| **Styling** | Tailwind CSS | 4.2.1 | Utility-first CSS framework |
-| **Components** | Radix UI | Latest | Accessible, unstyled components |
-| **Forms** | React Hook Form | 7.71.2 | Efficient form state management |
-| **Validation** | Zod | 3.24.2 | TypeScript-first schema validation |
-| **State (Server)** | TanStack Query | 5.101.1 | Server state synchronization |
-| **Icons** | Lucide React | 0.575.0 | Beautiful SVG icon library |
-| **Charting** | Recharts | 2.15.4 | React charts for financial data |
-| **Notifications** | Sonner | 2.0.7 | Toast notifications |
+| Layer              | Technology      | Version  | Purpose                            |
+| ------------------ | --------------- | -------- | ---------------------------------- |
+| **Language**       | TypeScript      | 5.8.3    | Type safety & developer experience |
+| **UI Framework**   | React           | 19.2.0   | Component-based UI                 |
+| **Routing**        | TanStack Router | 1.170.18 | Type-safe SPA routing              |
+| **Build Tool**     | Vite            | 8.1.5    | Fast bundling & dev server         |
+| **Styling**        | Tailwind CSS    | 4.2.1    | Utility-first CSS framework        |
+| **Components**     | Radix UI        | Latest   | Accessible, unstyled components    |
+| **Forms**          | React Hook Form | 7.71.2   | Efficient form state management    |
+| **Validation**     | Zod             | 3.24.2   | TypeScript-first schema validation |
+| **State (Server)** | TanStack Query  | 5.101.1  | Server state synchronization       |
+| **Icons**          | Lucide React    | 0.575.0  | Beautiful SVG icon library         |
+| **Charting**       | Recharts        | 2.15.4   | React charts for financial data    |
+| **Notifications**  | Sonner          | 2.0.7    | Toast notifications                |
 
 ### Development & Testing
 
-| Tool | Version | Purpose |
-|------|---------|---------|
-| **Testing Framework** | Vitest | 1.6.0 | Fast unit testing |
-| **Component Testing** | React Testing Library | 16.0.1 | Accessible component tests |
-| **Coverage** | @vitest/coverage-v8 | 1.6.0 | Code coverage reporting |
-| **Linting** | ESLint | 9.32.0 | Code quality checks |
-| **Formatting** | Prettier | 3.7.3 | Code formatting |
-| **Runtime** | Bun | Latest | Fast package manager & runtime |
+| Tool                  | Version               | Purpose |
+| --------------------- | --------------------- | ------- |
+| **Testing Framework** | Vitest                | 1.6.0   | Fast unit testing              |
+| **Component Testing** | React Testing Library | 16.0.1  | Accessible component tests     |
+| **Coverage**          | @vitest/coverage-v8   | 1.6.0   | Code coverage reporting        |
+| **Linting**           | ESLint                | 9.32.0  | Code quality checks            |
+| **Formatting**        | Prettier              | 3.7.3   | Code formatting                |
+| **Runtime**           | Bun                   | Latest  | Fast package manager & runtime |
 
 ### Server
 
-| Component | Technology |
-|-----------|-----------|
-| **Framework** | Nitro | 3.0.260603-beta |
-| **Build** | Vite + TanStack Start | Full-stack React framework |
-| **Deployment** | Lovable.dev | Connected visual editor |
+| Component      | Technology            |
+| -------------- | --------------------- |
+| **Framework**  | Nitro                 | 3.0.260603-beta            |
+| **Build**      | Vite + TanStack Start | Full-stack React framework |
+| **Deployment** | Lovable.dev           | Connected visual editor    |
 
 ---
 
@@ -174,6 +174,7 @@ Radix UI-based, unstyled components with Tailwind styling. All wrapped for consi
 - **Layout**: Sidebar, Separator, ScrollArea, ResizablePanels
 
 All 46 components provide:
+
 - Keyboard navigation support
 - ARIA labels & attributes
 - Dark/light mode support (via Tailwind tokens)
@@ -193,12 +194,14 @@ All include JSDoc documentation.
 ### Error Handling
 
 **ErrorBoundary** (React 16.8+ class component):
+
 - Catches JavaScript errors in component tree
 - Displays fallback UI
 - Logs errors for monitoring
 - Supports custom error handler callback
 
 **RouteErrorFallback** (TanStack Router integration):
+
 - Handles 404 and route-level errors
 - Provides recovery options (reload, go home)
 - Dev-only error details view
@@ -225,11 +228,13 @@ All include JSDoc documentation.
 
 **React Context**: None yet (ready for addition if needed)
 
-**Component State**: 
+**Component State**:
+
 - useState for local UI state (filters, form inputs)
 - useReducer for complex state (Phase 2 planned for onboarding)
 
-**Server State**: 
+**Server State**:
+
 - TanStack Query ready (queries already configured)
 - Currently uses mock data directly
 - Ready for real API integration
@@ -243,6 +248,7 @@ All include JSDoc documentation.
 Built on Tailwind CSS 4.2.1 with custom tokens:
 
 **Colors** (Tailwind CSS variables):
+
 - `primary` / `primary-foreground` - Brand color
 - `secondary` / `secondary-foreground` - Supporting color
 - `accent` - Highlights
@@ -254,6 +260,7 @@ Built on Tailwind CSS 4.2.1 with custom tokens:
 **Spacing**: Tailwind standard (4px baseline)
 
 **Typography**:
+
 - Sans-serif font stack
 - Utility classes: `.label-caps`, `.numeric`
 - Display font for numbers/stats
@@ -276,6 +283,7 @@ Example: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`
 ### TanStack Router (Type-Safe)
 
 **Structure**:
+
 - File-based routing in `src/routes/`
 - Automatic route tree generation (`routeTree.gen.ts`)
 - Nested routes via directory convention
@@ -300,6 +308,7 @@ Example: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`
 ```
 
 **Error Handling**:
+
 - Route-level error boundaries
 - Loader functions with validation
 - errorComponent fallback
@@ -326,7 +335,7 @@ When connecting to real APIs:
 ```typescript
 // Replace direct imports with queries:
 const { data: documents } = useQuery({
-  queryKey: ['documents'],
+  queryKey: ["documents"],
   queryFn: () => api.getDocuments(),
 });
 ```
@@ -443,11 +452,13 @@ Source → TypeScript Compilation
 ### Environment
 
 **Development**: `npm run dev`
+
 - HMR (Hot Module Replacement)
 - Source maps
 - Dev error details
 
 **Production**: `npm run build`
+
 - Optimized output
 - Minified assets
 - Source maps (optional)

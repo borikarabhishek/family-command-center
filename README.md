@@ -1,6 +1,7 @@
 Build a production-quality MVP prototype for a technology-first Multi-Family Office (MFO) platform for ordinary Indian families.
 
 IMPORTANT EXECUTION RULES:
+
 - Treat this as the foundational build of the product.
 - Prioritize maximum functional coverage and architectural quality over animations or visual effects.
 - Do not ask me unnecessary clarification questions. Make sensible product decisions.
@@ -19,6 +20,7 @@ Subtitle: "Your family's private operating system."
 
 CORE PRODUCT CONCEPT:
 The platform acts as a technology layer coordinating a family's:
+
 1. Financial information
 2. Documents
 3. Legal matters
@@ -34,6 +36,7 @@ TARGET CUSTOMER:
 Indian families across income levels, not only UHNW families.
 
 DESIGN LANGUAGE:
+
 - Premium but accessible
 - Trustworthy
 - Minimal
@@ -84,6 +87,7 @@ Step 2:
 Create family/household
 
 Fields:
+
 - Family name
 - Primary member
 - Number of family members
@@ -94,6 +98,7 @@ Step 3:
 Add family members
 
 Fields:
+
 - Name
 - Relationship
 - Date of birth
@@ -101,6 +106,7 @@ Fields:
 - Role
 
 Roles:
+
 - Family Owner
 - Family Member
 - Dependent
@@ -108,6 +114,7 @@ Roles:
 
 Step 4:
 Choose priorities:
+
 - Financial organization
 - Legal protection
 - Document management
@@ -134,6 +141,7 @@ Header:
 Show:
 
 Family health/status:
+
 - 5 family members
 - 24 important documents
 - 8 active tasks
@@ -141,6 +149,7 @@ Family health/status:
 - 2 pending approvals
 
 Financial overview:
+
 - Total Assets
 - Total Liabilities
 - Net Worth
@@ -151,6 +160,7 @@ Do NOT make this look like a stock-trading app.
 Create a simple net-worth visualization.
 
 Upcoming:
+
 - Insurance renewal
 - School fee deadline
 - Passport renewal
@@ -162,12 +172,13 @@ Priority alerts:
 "1 professional service request awaiting response"
 
 Quick actions:
-+ Add family member
-+ Upload document
-+ Create task
-+ Request professional
-+ Add asset
-+ Add liability
+
+- Add family member
+- Upload document
+- Create task
+- Request professional
+- Add asset
+- Add liability
 
 3. FAMILY
 
@@ -176,6 +187,7 @@ Create a family hierarchy.
 Display family members as cards.
 
 Each member should show:
+
 - Name
 - Relationship
 - Age
@@ -214,6 +226,7 @@ Liabilities
 Monthly obligations
 
 Asset categories:
+
 - Bank accounts
 - Fixed deposits
 - Mutual funds
@@ -225,6 +238,7 @@ Asset categories:
 - Other assets
 
 Liabilities:
+
 - Home loan
 - Personal loan
 - Credit card
@@ -261,6 +275,7 @@ Travel
 Family
 
 Features:
+
 - Upload document
 - Search
 - Filter
@@ -555,6 +570,7 @@ Do not simply shrink the desktop UI onto mobile.
 UX REQUIREMENTS:
 
 Every major screen should have:
+
 - Clear page title
 - Contextual action
 - Search/filter where appropriate
@@ -590,6 +606,7 @@ Do not implement regulatory integrations yet.
 IMPORTANT LEGAL/REGULATORY POSITIONING:
 
 Do not present FamilyOS itself as:
+
 - A bank
 - A broker
 - An insurer
@@ -655,6 +672,7 @@ Onboarding
 Make this journey extremely polished.
 
 Before finishing, verify:
+
 - Navigation works
 - All primary screens are reachable
 - Buttons have meaningful actions
@@ -711,43 +729,43 @@ Day 1 objective
 
 Build:
 
- Application shell
+Application shell
 
- Authentication/onboarding
+Authentication/onboarding
 
- Family creation
+Family creation
 
- Navigation
+Navigation
 
- Dashboard
+Dashboard
 
- Family section
+Family section
 
- Basic design system
+Basic design system
 
- Demo data
+Demo data
 
- Responsive mobile/desktop architecture
+Responsive mobile/desktop architecture
 
 The architecture should already anticipate:
 
 FamilyOS
 │
 ├── Family
-│   ├── Members
-│   ├── Roles
-│   └── Permissions
+│ ├── Members
+│ ├── Roles
+│ └── Permissions
 │
 ├── Financial
-│   ├── Assets
-│   └── Liabilities
+│ ├── Assets
+│ └── Liabilities
 │
 ├── Vault
-│   └── Documents
+│ └── Documents
 │
 ├── Services
-│   ├── Professionals
-│   └── Requests
+│ ├── Professionals
+│ └── Requests
 │
 ├── Tasks
 │
@@ -777,37 +795,37 @@ Ask Lovable to add:
 
 Family
 
- Family members
+Family members
 
- Relationships
+Relationships
 
- Roles
+Roles
 
- Member profiles
+Member profiles
 
- Dependents
+Dependents
 
- Authorized representatives
+Authorized representatives
 
- Permissions
+Permissions
 
- Family hierarchy
+Family hierarchy
 
 Financial overview
 
 Add:
 
- Assets
+Assets
 
- Liabilities
+Liabilities
 
- Net worth
+Net worth
 
- Asset categories
+Asset categories
 
- Liability categories
+Liability categories
 
- Basic charts
+Basic charts
 
 But do not connect banks yet.
 
@@ -844,19 +862,19 @@ Travel
 
 Each document:
 
- Owner
+Owner
 
- Category
+Category
 
- Upload date
+Upload date
 
- Expiry date
+Expiry date
 
- Status
+Status
 
- Search
+Search
 
- Filter
+Filter
 
 Tasks
 
@@ -894,27 +912,27 @@ Build the professional-services marketplace.
 
 Categories:
 
- Lawyer
+Lawyer
 
- CA
+CA
 
- Tax professional
+Tax professional
 
- Financial professional
+Financial professional
 
- Insurance professional
+Insurance professional
 
- Doctor/healthcare coordinator
+Doctor/healthcare coordinator
 
- Education consultant
+Education consultant
 
- Travel professional
+Travel professional
 
- Property professional
+Property professional
 
- Business consultant
+Business consultant
 
- Cybersecurity professional
+Cybersecurity professional
 
 Create:
 
@@ -923,21 +941,21 @@ Professional profile → Service → Request → Assignment → Status
 For example:
 
 Family member
-      ↓
+↓
 Legal problem
-      ↓
+↓
 FamilyOS
-      ↓
+↓
 Find lawyer
-      ↓
+↓
 Request service
-      ↓
+↓
 Professional accepts
-      ↓
+↓
 Family approves
-      ↓
+↓
 Work begins
-      ↓
+↓
 Completed
 
 This is where FamilyOS stops looking like a family dashboard and starts looking like an MFO orchestration platform.
@@ -979,13 +997,13 @@ Permission system
 Create:
 
 Family Owner
-     ↓
+↓
 Family Member
-     ↓
+↓
 Dependent
-     ↓
+↓
 Authorized Representative
-     ↓
+↓
 Professional
 
 Different users should see different information.
@@ -1006,21 +1024,21 @@ Security UX
 
 Add:
 
- 2FA
+2FA
 
- Session management
+Session management
 
- Device management
+Device management
 
- Privacy settings
+Privacy settings
 
- Data-sharing permissions
+Data-sharing permissions
 
- Activity history
+Activity history
 
- Login history
+Login history
 
- Consent records
+Consent records
 
 These can remain simulated for the prototype.
 
@@ -1044,29 +1062,29 @@ Tell Lovable to inspect everything already created.
 
 Fix:
 
- Broken navigation
+Broken navigation
 
- Inconsistent UI
+Inconsistent UI
 
- Mobile problems
+Mobile problems
 
- Desktop problems
+Desktop problems
 
- Empty states
+Empty states
 
- Form validation
+Form validation
 
- Loading states
+Loading states
 
- Error states
+Error states
 
- Duplicate components
+Duplicate components
 
- Broken routes
+Broken routes
 
- Inconsistent demo data
+Inconsistent demo data
 
- Accessibility issues
+Accessibility issues
 
 Then connect the workflows.
 
@@ -1075,61 +1093,61 @@ The final Day-6 workflow should look like this
 Scenario 1 — Legal
 
 Dashboard
- ↓
+↓
 Family Member
- ↓
+↓
 Legal issue
- ↓
+↓
 Request Lawyer
- ↓
+↓
 Select Professional
- ↓
+↓
 Create Request
- ↓
+↓
 Professional Assigned
- ↓
+↓
 Document Requested
- ↓
+↓
 Family Approval
- ↓
+↓
 Document Shared
- ↓
+↓
 Work In Progress
- ↓
+↓
 Completed
 
 Scenario 2 — Insurance
 
 Dashboard
- ↓
+↓
 Insurance document
- ↓
+↓
 Expiry approaching
- ↓
+↓
 Create task
- ↓
+↓
 Request insurance professional
- ↓
+↓
 Professional assigned
- ↓
+↓
 Family approval
- ↓
+↓
 Completed
 
 Scenario 3 — Property
 
 Property document
- ↓
+↓
 Expiry/review alert
- ↓
+↓
 Request lawyer
- ↓
+↓
 Authorize document
- ↓
+↓
 Professional review
- ↓
+↓
 Recommendation
- ↓
+↓
 Family decision
 
 Those workflows demonstrate the actual business concept far better than a collection of screens.
@@ -1167,24 +1185,24 @@ Your 6-day development roadmap
 I'd therefore make the product evolve like this:
 
 DAY 1
-        FOUNDATION
-           ↓
+FOUNDATION
+↓
 DAY 2
-      FAMILY OS
-           ↓
+FAMILY OS
+↓
 DAY 3
- DOCUMENTS + TASKS
-           ↓
+DOCUMENTS + TASKS
+↓
 DAY 4
- PROFESSIONAL NETWORK
-           ↓
+PROFESSIONAL NETWORK
+↓
 DAY 5
- GOVERNANCE + SECURITY
-           ↓
+GOVERNANCE + SECURITY
+↓
 DAY 6
-   INTEGRATION + QA
-           ↓
-       MVP DEMO
+INTEGRATION + QA
+↓
+MVP DEMO
 
 And after Day 6, don't immediately add AI, banking APIs, WhatsApp, Aadhaar, payments, etc.
 
@@ -1364,6 +1382,7 @@ npm run lint:fix    # Fix linting issues
 ### Troubleshooting
 
 **Port already in use**
+
 ```bash
 # Kill process on port 3000
 lsof -i :3000 | grep LISTEN | awk '{print $2}' | xargs kill -9
@@ -1371,6 +1390,7 @@ npm run dev
 ```
 
 **Dependencies not installed**
+
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules package-lock.json
@@ -1379,6 +1399,7 @@ npm run dev
 ```
 
 **TypeScript errors**
+
 ```bash
 npm run type-check  # Check all TypeScript errors
 npm run lint:fix    # Auto-fix auto-fixable issues
@@ -1401,4 +1422,3 @@ For the full development plan, see the project [Audit Plan](./AUDIT_PLAN.md) and
 - **Mock Data**: `src/data/demo.ts`
 
 ---
-
