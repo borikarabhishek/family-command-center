@@ -4,6 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   onAuthStateChange,
   resetPasswordForEmail,
   signInWithPassword,
@@ -20,6 +27,40 @@ type AuthMode = "signIn" | "signUp" | "forgotPassword" | "resetPassword";
 interface AuthStatusMessage {
   type: "error" | "success";
   text: string;
+}
+
+const COUNTRY_CODES = [
+  { code: "+1", label: "🇺🇸 +1 (US / Canada)" },
+  { code: "+91", label: "🇮🇳 +91 (India)" },
+  { code: "+44", label: "🇬🇧 +44 (UK)" },
+  { code: "+61", label: "🇦🇺 +61 (Australia)" },
+  { code: "+49", label: "🇩🇪 +49 (Germany)" },
+  { code: "+33", label: "🇫🇷 +33 (France)" },
+  { code: "+81", label: "🇯🇵 +81 (Japan)" },
+  { code: "+86", label: "🇨🇳 +86 (China)" },
+  { code: "+65", label: "🇸🇬 +65 (Singapore)" },
+  { code: "+971", label: "🇦🇪 +971 (UAE)" },
+  { code: "+966", label: "🇸🇦 +966 (Saudi Arabia)" },
+  { code: "+55", label: "🇧🇷 +55 (Brazil)" },
+  { code: "+52", label: "🇲🇽 +52 (Mexico)" },
+  { code: "+27", label: "🇿🇦 +27 (South Africa)" },
+  { code: "+234", label: "🇳🇬 +234 (Nigeria)" },
+  { code: "+34", label: "🇪🇸 +34 (Spain)" },
+  { code: "+39", label: "🇮🇹 +39 (Italy)" },
+  { code: "+31", label: "🇳🇱 +31 (Netherlands)" },
+  { code: "+64", label: "🇳🇿 +64 (New Zealand)" },
+  { code: "+63", label: "🇵🇭 +63 (Philippines)" },
+  { code: "+41", label: "🇨🇭 +41 (Switzerland)" },
+  { code: "+353", label: "🇮🇪 +353 (Ireland)" },
+];
+
+function formatFullPhoneNumber(countryCode: string, inputNumber: string): string {
+  const trimmed = inputNumber.trim();
+  if (trimmed.startsWith("+")) {
+    return trimmed;
+  }
+  const cleanNumber = trimmed.replace(/^0+/, "");
+  return `${countryCode}${cleanNumber}`;
 }
 
 export const Route = createFileRoute("/auth")({
@@ -46,7 +87,9 @@ function AuthPage() {
   const [method, setMethod] = useState<AuthMethod>("email");
   const [mode, setMode] = useState<AuthMode>("signIn");
   const [email, setEmail] = useState("");
+  const [countryCode, setCountryCode] = useState("+1");
   const [phone, setPhone] = useState("");
+  const [fullPhone, setFullPhone] = useState("");
   const [otpToken, setOtpToken] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [password, setPassword] = useState("");
@@ -86,20 +129,21 @@ function AuthPage() {
     try {
       if (method === "phone") {
         if (!otpSent) {
-          const formattedPhone = phone.trim().startsWith("+") ? phone.trim() : `+${phone.trim()}`;
-          const result = await signInWithPhoneOtp(formattedPhone);
+          const targetPhone = formatFullPhoneNumber(countryCode, phone);
+          setFullPhone(targetPhone);
+          const result = await signInWithPhoneOtp(targetPhone);
           if (result.error) {
             setStatusMessage({ type: "error", text: result.error.message });
           } else {
             setOtpSent(true);
             setStatusMessage({
               type: "success",
-              text: `6-digit verification code sent to ${formattedPhone}.`,
+              text: `6-digit verification code sent to ${targetPhone}.`,
             });
           }
         } else {
-          const formattedPhone = phone.trim().startsWith("+") ? phone.trim() : `+${phone.trim()}`;
-          const result = await verifyPhoneOtp(formattedPhone, otpToken.trim());
+          const targetPhone = fullPhone || formatFullPhoneNumber(countryCode, phone);
+          const result = await verifyPhoneOtp(targetPhone, otpToken.trim());
           if (result.error) {
             setStatusMessage({ type: "error", text: result.error.message });
           } else {
@@ -191,8 +235,8 @@ function AuthPage() {
         <p className="mt-2 text-sm text-muted-foreground">
           {method === "phone"
             ? otpSent
-              ? "Enter the 6-digit verification code sent via SMS."
-              : "We'll text you a one-time verification code to sign in."
+              ? `Enter the 6-digit verification code sent to ${fullPhone || "your phone"}.`
+              : "Choose your country code and enter your number to receive an SMS verification code."
             : mode === "signIn"
               ? "Sign in to create or access your family workspace."
               : mode === "signUp"
@@ -243,17 +287,35 @@ function AuthPage() {
               {!otpSent ? (
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone number</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    autoComplete="tel"
-                    placeholder="+1 (555) 000-0000"
-                    value={phone}
-                    onChange={(event) => setPhone(event.target.value)}
-                    required
-                  />
+                  <div className="flex gap-2">
+                    <div className="w-[120px] shrink-0">
+                      <Select value={countryCode} onValueChange={setCountryCode}>
+                        <SelectTrigger id="country-code" className="h-9 w-full">
+                          <SelectValue placeholder="Code" />
+                        </SelectTrigger>
+                        <SelectContent className="max-h-60">
+                          {COUNTRY_CODES.map((item) => (
+                            <SelectItem key={item.code} value={item.code}>
+                              {item.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex-1">
+                      <Input
+                        id="phone"
+                        type="tel"
+                        autoComplete="tel-national"
+                        placeholder="555-0123"
+                        value={phone}
+                        onChange={(event) => setPhone(event.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
                   <p className="text-xs text-muted-foreground">
-                    Include your country code (e.g. +1 for US, +91 for India).
+                    Selected code: <span className="font-medium text-foreground">{countryCode}</span>
                   </p>
                 </div>
               ) : (
@@ -406,12 +468,10 @@ function AuthPage() {
               className="w-full"
               variant="ghost"
               onClick={async () => {
-                const formattedPhone = phone.trim().startsWith("+")
-                  ? phone.trim()
-                  : `+${phone.trim()}`;
+                const targetPhone = fullPhone || formatFullPhoneNumber(countryCode, phone);
                 setIsSubmitting(true);
                 try {
-                  const res = await signInWithPhoneOtp(formattedPhone);
+                  const res = await signInWithPhoneOtp(targetPhone);
                   if (res.error) {
                     setStatusMessage({ type: "error", text: res.error.message });
                   } else {
