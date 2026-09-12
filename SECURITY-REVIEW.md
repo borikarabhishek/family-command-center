@@ -6,10 +6,10 @@
 
 ## Findings
 
-| # | Severity | File | Lines | Finding | Confidence |
-|---|---|---|---|---|---|
-| 1 | LOW | `src/components/ui/sidebar.tsx` | 76-87 | Sidebar preference cookie was writable without `SameSite` or conditional `Secure` attributes. | 7/10 |
-| 2 | LOW | `src/lib/lovable-error-reporting.ts` | 26-57 | Raw error messages, stacks, and route paths could be forwarded to telemetry without redaction or production gating. | 6/10 |
+| #   | Severity | File                                 | Lines | Finding                                                                                                             | Confidence |
+| --- | -------- | ------------------------------------ | ----- | ------------------------------------------------------------------------------------------------------------------- | ---------- |
+| 1   | LOW      | `src/components/ui/sidebar.tsx`      | 76-87 | Sidebar preference cookie was writable without `SameSite` or conditional `Secure` attributes.                       | 7/10       |
+| 2   | LOW      | `src/lib/lovable-error-reporting.ts` | 26-57 | Raw error messages, stacks, and route paths could be forwarded to telemetry without redaction or production gating. | 6/10       |
 
 ## Remediations Applied
 

@@ -37,11 +37,7 @@ function VaultPage() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
 
-  const docs = useMemo(
-    () =>
-      searchDocuments(query, category),
-    [query, category],
-  );
+  const docs = useMemo(() => searchDocuments(query, category), [query, category]);
 
   return (
     <AppShell>
@@ -65,7 +61,11 @@ function VaultPage() {
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
-        <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1" role="group" aria-label="Filter documents by category">
+        <div
+          className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1"
+          role="group"
+          aria-label="Filter documents by category"
+        >
           {DOCUMENT_CATEGORIES.map((c) => (
             <FilterButton
               key={c}
@@ -113,7 +113,13 @@ function VaultPage() {
             title="No documents match"
             description="Try a different search term or category. You can also upload a new document to this category."
             action={
-              <Button variant="outline" onClick={() => { setQuery(""); setCategory("All"); }}>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setQuery("");
+                  setCategory("All");
+                }}
+              >
                 Clear filters
               </Button>
             }

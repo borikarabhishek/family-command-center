@@ -14,7 +14,7 @@ describe("formatINR", () => {
 
 describe("formatDateIN", () => {
   it("formats an ISO date with an Indian locale", () => {
-    expect(formatDateIN("2026-09-09")).toMatch(/09 Sep 2026/);
+    expect(formatDateIN("2026-09-09")).toMatch(/^09 Sep(?:t)? 2026$/);
   });
 });
 

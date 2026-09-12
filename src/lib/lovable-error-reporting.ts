@@ -42,10 +42,7 @@ function sanitizeRoute(pathname: string): string {
   return pathname
     .split(/[?#]/, 1)[0]
     .replace(/\/\d+(?=\/|$)/g, "/:id")
-    .replace(
-      /\/[0-9a-f]{8}-[0-9a-f-]{27,36}(?=\/|$)/gi,
-      "/:id",
-    );
+    .replace(/\/[0-9a-f]{8}-[0-9a-f-]{27,36}(?=\/|$)/gi, "/:id");
 }
 
 export function reportLovableError(error: unknown, context: Record<string, unknown> = {}) {

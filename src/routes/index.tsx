@@ -318,7 +318,11 @@ function Onboarding() {
               <p className="mt-1 text-sm text-muted-foreground">
                 Choose as many as apply. This shapes your dashboard.
               </p>
-              <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Select priorities for your family">
+              <div
+                className="mt-6 flex flex-wrap gap-2"
+                role="group"
+                aria-label="Select priorities for your family"
+              >
                 {PRIORITY_OPTIONS.map((p) => {
                   const selected = priorities.includes(p);
                   return (
@@ -345,7 +349,11 @@ function Onboarding() {
         </div>
 
         <div className="mt-6 flex items-center justify-between">
-          <Button variant="ghost" onClick={() => setStep((s) => Math.max(0, s - 1))} disabled={step === 0}>
+          <Button
+            variant="ghost"
+            onClick={() => setStep((s) => Math.max(0, s - 1))}
+            disabled={step === 0}
+          >
             Back
           </Button>
           {step < 3 ? (

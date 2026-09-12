@@ -52,7 +52,11 @@ function TasksPage() {
         </TabsList>
 
         <TabsContent value="tasks" className="mt-4">
-          <div className="mb-3 flex flex-wrap gap-2" role="group" aria-label="Filter tasks by status">
+          <div
+            className="mb-3 flex flex-wrap gap-2"
+            role="group"
+            aria-label="Filter tasks by status"
+          >
             {filters.map((f) => (
               <FilterButton
                 key={f}
@@ -72,8 +76,7 @@ function TasksPage() {
                 <div>
                   <p className="font-medium">{t.title}</p>
                   <p className="text-xs text-muted-foreground">
-                    {t.category} · {memberById(t.assigneeId)?.name} · due{" "}
-                    {formatDateIN(t.dueDate)}
+                    {t.category} · {memberById(t.assigneeId)?.name} · due {formatDateIN(t.dueDate)}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
