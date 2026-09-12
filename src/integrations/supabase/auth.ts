@@ -13,6 +13,36 @@ export async function signInWithPassword(email: string, password: string): Promi
   return { error };
 }
 
+export async function signInWithPhoneOtp(phone: string): Promise<AuthResult> {
+  const { error } = await getSupabaseClient().auth.signInWithOtp({ phone });
+  return { error };
+}
+
+export async function verifyPhoneOtp(phone: string, token: string): Promise<AuthResult> {
+  const { error } = await getSupabaseClient().auth.verifyOtp({
+    phone,
+    token,
+    type: "sms",
+  });
+  return { error };
+}
+
+export async function signInWithPhonePassword(
+  phone: string,
+  password: string,
+): Promise<AuthResult> {
+  const { error } = await getSupabaseClient().auth.signInWithPassword({ phone, password });
+  return { error };
+}
+
+export async function signUpWithPhonePassword(
+  phone: string,
+  password: string,
+): Promise<AuthResult> {
+  const { error } = await getSupabaseClient().auth.signUp({ phone, password });
+  return { error };
+}
+
 export async function signOut(): Promise<AuthResult> {
   const { error } = await getSupabaseClient().auth.signOut();
   return { error };
