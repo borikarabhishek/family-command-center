@@ -23,14 +23,50 @@ declare global {
   }
 }
 
+function sanitizeMessage(error: unknown): string {
+  const message =
+    error instanceof Response
+      ? `Response ${error.status}`
+      : error instanceof Error
+        ? error.message
+        : String(error);
+
+  return message
+    .replace(/https?:\/\/\S+/gi, "[url]")
+    .replace(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi, "[email]")
+    .replace(/\b(?:Bearer\s+)?[A-Z0-9_-]{24,}\b/gi, "[redacted]")
+    .slice(0, 500);
+}
+
+function sanitizeRoute(pathname: string): string {
+  return pathname
+    .split(/[?#]/, 1)[0]
+    .replace(/\/\d+(?=\/|$)/g, "/:id")
+    .replace(
+      /\/[0-9a-f]{8}-[0-9a-f-]{27,36}(?=\/|$)/gi,
+      "/:id",
+    );
+}
+
 export function reportLovableError(error: unknown, context: Record<string, unknown> = {}) {
-  if (typeof window === "undefined") return;
+  // Detailed client-side telemetry is development/editor-only. Production errors
+  // must not forward raw exception data or user-controlled context.
+  if (typeof window === "undefined" || !import.meta.env.DEV) return;
+
+  const message = sanitizeMessage(error);
+  const safeContext = Object.fromEntries(
+    Object.entries(context).filter(
+      ([key, value]) => key === "boundary" && typeof value === "string",
+    ),
+  );
+  const sanitizedError = new Error(message);
+
   window.__lovableEvents?.captureException?.(
-    error,
+    sanitizedError,
     {
       source: "react_error_boundary",
-      route: window.location.pathname,
-      ...context,
+      route: sanitizeRoute(window.location.pathname),
+      ...safeContext,
     },
     {
       mechanism: "react_error_boundary",
@@ -38,21 +74,10 @@ export function reportLovableError(error: unknown, context: Record<string, unkno
       severity: "error",
     },
   );
-  // Prod React does not rethrow boundary-caught errors to window.onerror, so the
-  // editor's telemetry never sees them. Forward to lovable.js's reporting hook,
-  // which is present only inside the editor preview.
-  // Loaders and server fns commonly throw a raw Response; String(it) is the
-  // opaque "[object Response]", so pull out the status and URL instead.
-  const message =
-    error instanceof Response
-      ? `Response ${error.status}${error.url ? ` at ${error.url}` : ""}`
-      : error instanceof Error
-        ? error.message
-        : String(error);
-  const stack = error instanceof Error ? error.stack : undefined;
+  // The editor preview may expose a second runtime reporting hook. Forward only
+  // the already-sanitized message and normalized route.
   window.__lovableReportRuntimeError?.({
     message,
-    ...(stack !== undefined && { stack }),
-    filename: window.location.pathname,
+    filename: sanitizeRoute(window.location.pathname),
   });
 }
