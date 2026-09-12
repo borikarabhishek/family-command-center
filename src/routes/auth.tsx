@@ -182,14 +182,30 @@ function AuthPage() {
         } else if (mode === "signIn") {
           const result = await signInWithPassword(email, password);
           if (result.error) {
-            setStatusMessage({ type: "error", text: result.error.message });
+            const errorMsg = result.error.message.toLowerCase();
+            if (errorMsg.includes("rate limit")) {
+              setStatusMessage({
+                type: "error",
+                text: "Supabase email rate limit reached. Please wait a few minutes, or create/confirm the user directly in your Supabase dashboard (Authentication > Users).",
+              });
+            } else {
+              setStatusMessage({ type: "error", text: result.error.message });
+            }
           } else {
             await navigate({ to: "/" });
           }
         } else {
           const result = await signUpWithPassword(email, password);
           if (result.error) {
-            setStatusMessage({ type: "error", text: result.error.message });
+            const errorMsg = result.error.message.toLowerCase();
+            if (errorMsg.includes("rate limit")) {
+              setStatusMessage({
+                type: "error",
+                text: "Supabase free email rate limit exceeded (max 3-4 emails/hr). To bypass this for development, disable 'Confirm email' in Supabase Dashboard (Auth > Providers > Email) or add your user directly under Auth > Users.",
+              });
+            } else {
+              setStatusMessage({ type: "error", text: result.error.message });
+            }
           } else {
             setStatusMessage({
               type: "success",
