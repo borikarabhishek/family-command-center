@@ -33,7 +33,7 @@ export const Route = createFileRoute("/vault")({
   component: VaultPage,
 });
 
-function VaultPage() {
+export function VaultPage() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
 

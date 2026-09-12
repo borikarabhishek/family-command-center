@@ -88,7 +88,7 @@ export type DocumentCategory = (typeof DOCUMENT_CATEGORIES)[number];
 // TASK/APPROVAL STATUSES
 // ============================================================================
 
-export const TASK_STATUS = ["Pending", "In Progress", "Completed", "On Hold"] as const;
+export const TASK_STATUS = ["To Do", "In Progress", "Waiting", "Completed"] as const;
 
 export type TaskStatus = (typeof TASK_STATUS)[number];
 
@@ -108,7 +108,7 @@ export type PriorityLevel = (typeof PRIORITY_LEVELS)[number];
 // DOCUMENT STATUS
 // ============================================================================
 
-export const DOCUMENT_STATUS = ["Current", "Expiring Soon", "Expired", "Not Started"] as const;
+export const DOCUMENT_STATUS = ["Verified", "Pending Review", "Expiring Soon", "Expired"] as const;
 
 export type DocumentStatus = (typeof DOCUMENT_STATUS)[number];
 

@@ -1,4 +1,13 @@
-import { z } from "zod";
+import * as z from "zod";
+import {
+  DOCUMENT_CATEGORIES,
+  FAMILY_ROLES,
+  LANGUAGES,
+  PERMISSIONS,
+  PRIORITY_LEVELS,
+  RELATIONSHIPS,
+  TASK_STATUS,
+} from "@/data/constants";
 
 /**
  * Validation schemas for form inputs and API data
@@ -21,7 +30,7 @@ export const OnboardingWelcomeSchema = z.object({
     .string()
     .min(2, { message: "City must be at least 2 characters" })
     .max(50, { message: "City must be less than 50 characters" }),
-  language: z.enum(["English", "हिन्दी"], {
+  language: z.enum(LANGUAGES, {
     errorMap: () => ({ message: "Please select a valid language" }),
   }),
 });
@@ -32,7 +41,7 @@ export const FamilyMemberSchema = z.object({
     .string()
     .min(2, { message: "Name must be at least 2 characters" })
     .max(100, { message: "Name must be less than 100 characters" }),
-  relationship: z.enum(["Self", "Spouse", "Son", "Daughter", "Mother", "Father", "Other"], {
+  relationship: z.enum(RELATIONSHIPS, {
     errorMap: () => ({ message: "Please select a valid relationship" }),
   }),
   dob: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
@@ -43,10 +52,10 @@ export const FamilyMemberSchema = z.object({
     .regex(/^\+?[1-9]\d{1,14}$/, { message: "Please enter a valid phone number" })
     .optional()
     .or(z.literal("")),
-  role: z.enum(["Family Owner", "Family Member", "Dependent", "Authorized Representative"], {
+  role: z.enum(FAMILY_ROLES, {
     errorMap: () => ({ message: "Please select a valid role" }),
   }),
-  permission: z.enum(["Owner", "Member", "Viewer"], {
+  permission: z.enum(PERMISSIONS, {
     errorMap: () => ({ message: "Please select a valid permission level" }),
   }),
 });
@@ -75,7 +84,7 @@ export const CompleteOnboardingSchema = OnboardingWelcomeSchema.merge(
 
 export const DocumentFilterSchema = z.object({
   query: z.string().optional(),
-  category: z.string().optional(),
+  category: z.enum(DOCUMENT_CATEGORIES).optional(),
   ownerId: z.string().optional(),
 });
 
@@ -84,8 +93,8 @@ export const DocumentFilterSchema = z.object({
 // ============================================================================
 
 export const TaskFilterSchema = z.object({
-  status: z.enum(["Pending", "In Progress", "Completed", "On Hold"]).optional(),
-  priority: z.enum(["High", "Medium", "Low"]).optional(),
+  status: z.enum(TASK_STATUS).optional(),
+  priority: z.enum(PRIORITY_LEVELS).optional(),
 });
 
 // ============================================================================
@@ -104,15 +113,11 @@ export type TaskFilter = z.infer<typeof TaskFilterSchema>;
  * Utility to safely parse and validate data
  * Returns { success: true, data } or { success: false, error }
  */
-export function validateData<T>(
-  schema: z.Schema,
+export function validateData<TSchema extends z.ZodTypeAny>(
+  schema: TSchema,
   data: unknown,
-): { success: boolean; data?: T; error?: z.ZodError } {
-  const result = schema.safeParse(data);
-  if (result.success) {
-    return { success: true, data: result.data as T };
-  }
-  return { success: false, error: result.error };
+): z.SafeParseReturnType<unknown, z.infer<TSchema>> {
+  return schema.safeParse(data);
 }
 
 /**

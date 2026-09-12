@@ -31,7 +31,7 @@ export const Route = createFileRoute("/tasks")({
 
 const filters = ["All", "To Do", "In Progress", "Waiting", "Completed"];
 
-function TasksPage() {
+export function TasksPage() {
   const [filter, setFilter] = useState("All");
   const tasks = demoTasks.filter((t) => filter === "All" || t.status === filter);
 

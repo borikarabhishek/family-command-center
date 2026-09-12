@@ -73,7 +73,7 @@ export function getMemberAssets(memberId: string): Asset[] {
  * @returns Total value of all assets
  */
 export function getMemberAssetValue(memberId: string): number {
-  return getMemberAssets(memberId).reduce((sum, asset) => sum + asset.estimatedValue, 0);
+  return getMemberAssets(memberId).reduce((sum, asset) => sum + asset.value, 0);
 }
 
 /**
@@ -154,8 +154,8 @@ export function getExpiringDocuments(): FamilyDocument[] {
   const ninetyDaysFromNow = new Date(today.getTime() + 90 * 24 * 60 * 60 * 1000);
 
   return demoDocuments.filter((doc) => {
-    if (!doc.expiryDate) return false;
-    const expiryDate = new Date(doc.expiryDate);
+    if (!doc.expiresAt) return false;
+    const expiryDate = new Date(doc.expiresAt);
     return expiryDate >= today && expiryDate <= ninetyDaysFromNow;
   });
 }
