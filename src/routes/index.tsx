@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { FAMILY_ROLES, LANGUAGES, PRIORITY_OPTIONS, RELATIONSHIPS } from "@/data/constants";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,20 +33,6 @@ export const Route = createFileRoute("/")({
   }),
   component: Onboarding,
 });
-
-const relationships = ["Self", "Spouse", "Son", "Daughter", "Mother", "Father", "Other"];
-const roles = ["Family Owner", "Family Member", "Dependent", "Authorized Representative"];
-const priorityOptions = [
-  "Financial organization",
-  "Legal protection",
-  "Document management",
-  "Healthcare coordination",
-  "Education",
-  "Travel",
-  "Business",
-  "Property",
-  "Professional services",
-];
 
 interface MemberDraft {
   name: string;
@@ -192,7 +179,7 @@ function Onboarding() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {["English", "हिन्दी", "मराठी", "தமிழ்", "తెలుగు", "ಕನ್ನಡ"].map((l) => (
+                      {LANGUAGES.map((l) => (
                         <SelectItem key={l} value={l}>
                           {l}
                         </SelectItem>
@@ -240,7 +227,7 @@ function Onboarding() {
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            {relationships.map((r) => (
+                            {RELATIONSHIPS.map((r) => (
                               <SelectItem key={r} value={r}>
                                 {r}
                               </SelectItem>
@@ -288,7 +275,7 @@ function Onboarding() {
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            {roles.map((r) => (
+                            {FAMILY_ROLES.map((r) => (
                               <SelectItem key={r} value={r}>
                                 {r}
                               </SelectItem>
@@ -332,7 +319,7 @@ function Onboarding() {
                 Choose as many as apply. This shapes your dashboard.
               </p>
               <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Select priorities for your family">
-                {priorityOptions.map((p) => {
+                {PRIORITY_OPTIONS.map((p) => {
                   const selected = priorities.includes(p);
                   return (
                     <button

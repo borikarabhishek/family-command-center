@@ -6,11 +6,13 @@ import { PageHeader } from "@/components/common/PageHeader";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { EmptyState } from "@/components/common/EmptyState";
 import { DemoNotice } from "@/components/common/DemoNotice";
+import { FilterButton } from "@/components/FilterButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { demoDocuments, memberById } from "@/data/demo";
+import { memberById } from "@/data/demo";
+import { DOCUMENT_CATEGORIES } from "@/data/constants";
+import { searchDocuments } from "@/data/demo.helpers";
 import { formatDateIN } from "@/lib/format";
-import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/vault")({
   head: () => ({
@@ -31,32 +33,13 @@ export const Route = createFileRoute("/vault")({
   component: VaultPage,
 });
 
-const categories = [
-  "All",
-  "Identity",
-  "Financial",
-  "Insurance",
-  "Property",
-  "Legal",
-  "Education",
-  "Healthcare",
-  "Business",
-  "Tax",
-  "Travel",
-  "Family",
-];
-
 function VaultPage() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
 
   const docs = useMemo(
     () =>
-      demoDocuments.filter(
-        (d) =>
-          (category === "All" || d.category === category) &&
-          d.name.toLowerCase().includes(query.trim().toLowerCase()),
-      ),
+      searchDocuments(query, category),
     [query, category],
   );
 
@@ -83,22 +66,14 @@ function VaultPage() {
           />
         </div>
         <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1" role="group" aria-label="Filter documents by category">
-          {categories.map((c) => (
-            <button
+          {DOCUMENT_CATEGORIES.map((c) => (
+            <FilterButton
               key={c}
-              type="button"
+              label={c}
+              category="documents"
+              isActive={category === c}
               onClick={() => setCategory(c)}
-              aria-label={`Filter documents by ${c}`}
-              aria-pressed={category === c}
-              className={cn(
-                "whitespace-nowrap rounded-full border px-3 py-1.5 text-xs transition-colors",
-                category === c
-                  ? "border-accent bg-accent/15 text-foreground"
-                  : "border-border text-muted-foreground hover:border-accent/50",
-              )}
-            >
-              {c}
-            </button>
+            />
           ))}
         </div>
       </div>

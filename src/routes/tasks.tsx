@@ -4,11 +4,11 @@ import { AppShell } from "@/components/layout/AppShell";
 import { PageHeader } from "@/components/common/PageHeader";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { DemoNotice } from "@/components/common/DemoNotice";
+import { FilterButton } from "@/components/FilterButton";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { demoApprovals, demoTasks, memberById } from "@/data/demo";
 import { formatDateIN, formatINR } from "@/lib/format";
-import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/tasks")({
   head: () => ({
@@ -54,21 +54,13 @@ function TasksPage() {
         <TabsContent value="tasks" className="mt-4">
           <div className="mb-3 flex flex-wrap gap-2" role="group" aria-label="Filter tasks by status">
             {filters.map((f) => (
-              <button
+              <FilterButton
                 key={f}
-                type="button"
+                label={f}
+                category="tasks"
+                isActive={filter === f}
                 onClick={() => setFilter(f)}
-                aria-label={`Filter tasks by ${f}`}
-                aria-pressed={filter === f}
-                className={cn(
-                  "rounded-full border px-3 py-1.5 text-xs transition-colors",
-                  filter === f
-                    ? "border-accent bg-accent/15 text-foreground"
-                    : "border-border text-muted-foreground hover:border-accent/50",
-                )}
-              >
-                {f}
-              </button>
+              />
             ))}
           </div>
           <ul className="surface divide-y divide-border">

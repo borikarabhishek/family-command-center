@@ -40,7 +40,7 @@ export type Permission = (typeof PERMISSIONS)[number];
 // LANGUAGES
 // ============================================================================
 
-export const LANGUAGES = ["English", "हिन्दी"] as const;
+export const LANGUAGES = ["English", "हिन्दी", "मराठी", "தமிழ்", "తెలుగు", "ಕನ್ನಡ"] as const;
 
 export type Language = (typeof LANGUAGES)[number];
 
