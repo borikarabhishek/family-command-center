@@ -32,8 +32,6 @@ const mobileNav = [
   { to: "/dashboard", label: "Home", icon: Home },
   { to: "/family", label: "Family", icon: Users },
   { to: "/vault", label: "Vault", icon: FolderLock },
-  { to: "/services", label: "Services", icon: Briefcase },
-  { to: "/tasks", label: "Tasks", icon: ListChecks },
   { to: "/more", label: "More", icon: LayoutGrid },
 ] as const;
 
