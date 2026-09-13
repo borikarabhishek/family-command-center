@@ -123,6 +123,14 @@ export interface Approval {
   date: string;
   status: ApprovalStatus;
   detail: string;
+  kind?: ApprovalKind;
+  requestId?: string;
+  professionalId?: string;
+  categories?: DocumentCategory[];
+  memberIds?: string[];
+  includeFinancials?: boolean;
+  accessDays?: number;
+  decidedAt?: string;
 }
 
 export type ServiceCategory =
