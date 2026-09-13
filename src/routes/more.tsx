@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Banknote, CalendarDays, ChevronRight, MessageSquare, Settings } from "lucide-react";
+import { Banknote, Briefcase, CalendarDays, ChevronRight, ListChecks, MessageSquare, Settings } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { PageHeader } from "@/components/common/PageHeader";
 import { DemoNotice } from "@/components/common/DemoNotice";
@@ -22,6 +22,8 @@ export const Route = createFileRoute("/more")({
 
 const links = [
   { to: "/financial", label: "Financial Overview", icon: Banknote },
+  { to: "/tasks", label: "Tasks & Approvals", icon: ListChecks },
+  { to: "/services", label: "Services", icon: Briefcase },
   { to: "/calendar", label: "Calendar", icon: CalendarDays },
   { to: "/messages", label: "Messages", icon: MessageSquare },
   { to: "/settings", label: "Settings", icon: Settings },

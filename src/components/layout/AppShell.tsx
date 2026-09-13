@@ -32,8 +32,6 @@ const mobileNav = [
   { to: "/dashboard", label: "Home", icon: Home },
   { to: "/family", label: "Family", icon: Users },
   { to: "/vault", label: "Vault", icon: FolderLock },
-  { to: "/services", label: "Services", icon: Briefcase },
-  { to: "/tasks", label: "Tasks", icon: ListChecks },
   { to: "/more", label: "More", icon: LayoutGrid },
 ] as const;
 
@@ -101,7 +99,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </div>
 
       <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-card/95 backdrop-blur lg:hidden">
-        <ul className="grid grid-cols-6">
+        <ul className="grid grid-cols-4">
           {mobileNav.map(({ to, label, icon: Icon }) => {
             const active = pathname === to || pathname.startsWith(`${to}/`);
             return (
