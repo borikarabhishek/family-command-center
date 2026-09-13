@@ -99,7 +99,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </div>
 
       <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-card/95 backdrop-blur lg:hidden">
-        <ul className="grid grid-cols-6">
+        <ul className="grid grid-cols-4">
           {mobileNav.map(({ to, label, icon: Icon }) => {
             const active = pathname === to || pathname.startsWith(`${to}/`);
             return (
