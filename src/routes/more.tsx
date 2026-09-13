@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Banknote, CalendarDays, ChevronRight, MessageSquare, Settings } from "lucide-react";
+import { Banknote, Briefcase, CalendarDays, ChevronRight, ListChecks, MessageSquare, Settings } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { PageHeader } from "@/components/common/PageHeader";
 import { DemoNotice } from "@/components/common/DemoNotice";
