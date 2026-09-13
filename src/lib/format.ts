@@ -14,13 +14,36 @@ export function formatINR(amount: number, opts?: { compact?: boolean }): string 
   }).format(amount);
 }
 
+const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+/** Deterministic on server and client (no ICU locale differences). */
 export function formatDateIN(iso: string): string {
   const d = new Date(iso);
-  return new Intl.DateTimeFormat("en-IN", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(d);
+  if (Number.isNaN(d.getTime())) return iso;
+  const day = String(d.getUTCDate()).padStart(2, "0");
+  return `${day} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+}
+
+export function todayISO(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+export function addDaysISO(days: number, from = new Date()): string {
+  const d = new Date(from.getTime() + days * 86_400_000);
+  return d.toISOString().slice(0, 10);
 }
 
 export function ageFromDOB(iso: string): number {
