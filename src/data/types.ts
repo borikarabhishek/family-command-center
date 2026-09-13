@@ -186,3 +186,22 @@ export interface Conversation {
   lastAt: string;
   unread: number;
 }
+
+/** Day 4-5 additions: professional engagement workflow + permission layers. */
+
+export type ApprovalKind = "Data Access" | "Expense" | "Engagement" | "Other";
+
+export interface AccessGrant {
+  id: string;
+  professionalId: string;
+  requestId?: string;
+  /** Document categories the professional may view. */
+  categories: DocumentCategory[];
+  /** Members whose records are in scope. */
+  memberIds: string[];
+  includeFinancials: boolean;
+  grantedAt: string;
+  expiresAt: string;
+  status: "Active" | "Revoked" | "Expired";
+  note?: string;
+}
