@@ -119,18 +119,18 @@ export interface Approval {
   id: string;
   request: string;
   requestedById: string;
-  amount?: number;
+  amount?: number | undefined;
   date: string;
   status: ApprovalStatus;
   detail: string;
-  kind?: ApprovalKind;
-  requestId?: string;
-  professionalId?: string;
-  categories?: DocumentCategory[];
-  memberIds?: string[];
-  includeFinancials?: boolean;
-  accessDays?: number;
-  decidedAt?: string;
+  kind?: ApprovalKind | undefined;
+  requestId?: string | undefined;
+  professionalId?: string | undefined;
+  categories?: DocumentCategory[] | undefined;
+  memberIds?: string[] | undefined;
+  includeFinancials?: boolean | undefined;
+  accessDays?: number | undefined;
+  decidedAt?: string | undefined;
 }
 
 export type ServiceCategory =
@@ -202,7 +202,7 @@ export type ApprovalKind = "Data Access" | "Expense" | "Engagement" | "Other";
 export interface AccessGrant {
   id: string;
   professionalId: string;
-  requestId?: string;
+  requestId?: string | undefined;
   /** Document categories the professional may view. */
   categories: DocumentCategory[];
   /** Members whose records are in scope. */
@@ -211,5 +211,5 @@ export interface AccessGrant {
   grantedAt: string;
   expiresAt: string;
   status: "Active" | "Revoked" | "Expired";
-  note?: string;
+  note?: string | undefined;
 }
