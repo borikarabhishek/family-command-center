@@ -22,6 +22,8 @@ export const Route = createFileRoute("/more")({
 
 const links = [
   { to: "/financial", label: "Financial Overview", icon: Banknote },
+  { to: "/tasks", label: "Tasks & Approvals", icon: ListChecks },
+  { to: "/services", label: "Services", icon: Briefcase },
   { to: "/calendar", label: "Calendar", icon: CalendarDays },
   { to: "/messages", label: "Messages", icon: MessageSquare },
   { to: "/settings", label: "Settings", icon: Settings },
