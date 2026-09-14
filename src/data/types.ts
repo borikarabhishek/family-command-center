@@ -24,7 +24,7 @@ export interface FamilyMember {
   permission: PermissionLevel;
   verification: VerificationStatus;
   city: string;
-  notes?: string;
+  notes?: string | undefined;
 }
 
 export interface Family {
@@ -61,7 +61,7 @@ export interface Asset {
   category: AssetCategory;
   value: number;
   ownerId: string;
-  institution?: string;
+  institution?: string | undefined;
 }
 
 export interface Liability {
@@ -71,7 +71,7 @@ export interface Liability {
   outstanding: number;
   monthlyObligation: number;
   ownerId: string;
-  institution?: string;
+  institution?: string | undefined;
 }
 
 export type DocumentCategory =
@@ -95,7 +95,7 @@ export interface FamilyDocument {
   category: DocumentCategory;
   ownerId: string;
   uploadedAt: string;
-  expiresAt?: string;
+  expiresAt?: string | undefined;
   status: DocumentStatus;
 }
 
@@ -175,7 +175,7 @@ export interface ServiceRequest {
   preferredDate: string;
   budgetRange: string;
   status: ServiceRequestStatus;
-  professionalId?: string;
+  professionalId?: string | undefined;
 }
 
 export interface CalendarEvent {
@@ -183,7 +183,7 @@ export interface CalendarEvent {
   title: string;
   date: string;
   type: "Renewal" | "Payment" | "Deadline" | "Appointment" | "Family";
-  memberId?: string;
+  memberId?: string | undefined;
 }
 
 export interface Conversation {
