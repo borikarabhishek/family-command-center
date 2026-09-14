@@ -231,3 +231,30 @@ export function Picker<T extends string>({
     </Select>
   );
 }
+
+export function MemberPicker({
+  value,
+  onChange,
+  includeAll,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  includeAll?: boolean;
+}) {
+  const { members } = useFamily();
+  return (
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger>
+        <SelectValue placeholder="Select member" />
+      </SelectTrigger>
+      <SelectContent>
+        {includeAll ? <SelectItem value="all">All members</SelectItem> : null}
+        {members.map((m) => (
+          <SelectItem key={m.id} value={m.id}>
+            {m.name} — {m.relationship}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+}

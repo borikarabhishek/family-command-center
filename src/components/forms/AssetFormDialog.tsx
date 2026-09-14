@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Field, Picker } from "./MemberFormDialog";
+import { Field, MemberPicker, Picker } from "./MemberFormDialog";
 import { useFamily } from "@/data/store";
 import type { Asset, AssetCategory } from "@/data/types";
 
@@ -119,9 +119,8 @@ export function AssetFormDialog({ asset, trigger }: { asset?: Asset; trigger: Re
             />
           </Field>
           <Field label="Owner">
-            <Picker
+            <MemberPicker
               value={form.ownerId}
-              options={members.map((m) => m.id)}
               onChange={(v) => setForm((f) => ({ ...f, ownerId: v }))}
             />
           </Field>
@@ -133,10 +132,6 @@ export function AssetFormDialog({ asset, trigger }: { asset?: Asset; trigger: Re
             />
           </Field>
         </div>
-        <p className="text-xs text-muted-foreground">
-          Owner shown by ID:{" "}
-          {members.find((m) => m.id === form.ownerId)?.name ?? "add a family member first"}
-        </p>
         {error ? <p className="text-sm text-destructive">{error}</p> : null}
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>
