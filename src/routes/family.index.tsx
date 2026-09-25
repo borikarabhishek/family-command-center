@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/common/PageHeader";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { DemoNotice } from "@/components/common/DemoNotice";
 import { Button } from "@/components/ui/button";
+import { useFamily } from "@/data/store";
 import { demoDocuments, demoFamily, demoMembers, demoTasks } from "@/data/demo";
 import { ageFromDOB, initials } from "@/lib/format";
 
@@ -28,13 +29,14 @@ export const Route = createFileRoute("/family/")({
 });
 
 function FamilyPage() {
+  const { isSecureDemo } = useFamily();
   return (
     <AppShell>
       <PageHeader
         title={demoFamily.name}
         description={`${demoMembers.length} members · ${demoFamily.city} · workspace created ${demoFamily.createdAt}`}
         action={
-          <Button>
+          <Button disabled={isSecureDemo}>
             <UserPlus className="size-4" /> Add family member
           </Button>
         }

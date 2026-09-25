@@ -1,5 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  Cell,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import { Banknote, Pencil, Plus, Trash2, Wallet } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { PageHeader } from "@/components/common/PageHeader";
@@ -40,8 +50,16 @@ const palette = [
 ];
 
 function FinancialPage() {
-  const { assets, liabilities, totals, memberById, deleteAsset, deleteLiability, members } =
-    useFamily();
+  const {
+    assets,
+    liabilities,
+    totals,
+    memberById,
+    deleteAsset,
+    deleteLiability,
+    members,
+    isSecureDemo,
+  } = useFamily();
 
   const byCategory = Object.entries(
     assets.reduce<Record<string, number>>((acc, a) => {
@@ -68,14 +86,14 @@ function FinancialPage() {
           <div className="flex gap-2">
             <AssetFormDialog
               trigger={
-                <Button size="sm" disabled={noMembers}>
+                <Button size="sm" disabled={noMembers || isSecureDemo}>
                   <Plus className="size-4" /> Asset
                 </Button>
               }
             />
             <LiabilityFormDialog
               trigger={
-                <Button size="sm" variant="outline" disabled={noMembers}>
+                <Button size="sm" variant="outline" disabled={noMembers || isSecureDemo}>
                   <Plus className="size-4" /> Liability
                 </Button>
               }
@@ -86,8 +104,15 @@ function FinancialPage() {
 
       <section className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <StatCard label="Total assets" value={formatINR(totals.assets, { compact: true })} />
-        <StatCard label="Total liabilities" value={formatINR(totals.liabilities, { compact: true })} />
-        <StatCard label="Net worth" value={formatINR(totals.netWorth, { compact: true })} emphasis />
+        <StatCard
+          label="Total liabilities"
+          value={formatINR(totals.liabilities, { compact: true })}
+        />
+        <StatCard
+          label="Net worth"
+          value={formatINR(totals.netWorth, { compact: true })}
+          emphasis
+        />
         <StatCard
           label="Monthly obligations"
           value={formatINR(totals.monthlyObligations, { compact: true })}
@@ -106,7 +131,13 @@ function FinancialPage() {
               <div className="mt-2 h-56">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
-                    <Pie data={byCategory} dataKey="value" nameKey="name" innerRadius={52} outerRadius={82}>
+                    <Pie
+                      data={byCategory}
+                      dataKey="value"
+                      nameKey="name"
+                      innerRadius={52}
+                      outerRadius={82}
+                    >
                       {byCategory.map((_, i) => (
                         <Cell key={i} fill={palette[i % palette.length]} />
                       ))}
@@ -195,7 +226,7 @@ function FinancialPage() {
               action={
                 <AssetFormDialog
                   trigger={
-                    <Button disabled={noMembers}>
+                    <Button disabled={noMembers || isSecureDemo}>
                       <Plus className="size-4" /> Add asset
                     </Button>
                   }
@@ -222,7 +253,12 @@ function FinancialPage() {
                   <AssetFormDialog
                     asset={a}
                     trigger={
-                      <Button size="icon" variant="ghost" aria-label={`Edit ${a.name}`}>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        aria-label={`Edit ${a.name}`}
+                        disabled={isSecureDemo}
+                      >
                         <Pencil className="size-4" />
                       </Button>
                     }
@@ -231,6 +267,7 @@ function FinancialPage() {
                     size="icon"
                     variant="ghost"
                     aria-label={`Delete ${a.name}`}
+                    disabled={isSecureDemo}
                     onClick={() => deleteAsset(a.id)}
                   >
                     <Trash2 className="size-4 text-destructive" />
@@ -253,7 +290,7 @@ function FinancialPage() {
               action={
                 <LiabilityFormDialog
                   trigger={
-                    <Button disabled={noMembers}>
+                    <Button disabled={noMembers || isSecureDemo}>
                       <Plus className="size-4" /> Add liability
                     </Button>
                   }
@@ -280,7 +317,12 @@ function FinancialPage() {
                   <LiabilityFormDialog
                     liability={l}
                     trigger={
-                      <Button size="icon" variant="ghost" aria-label={`Edit ${l.name}`}>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        aria-label={`Edit ${l.name}`}
+                        disabled={isSecureDemo}
+                      >
                         <Pencil className="size-4" />
                       </Button>
                     }
@@ -289,6 +331,7 @@ function FinancialPage() {
                     size="icon"
                     variant="ghost"
                     aria-label={`Delete ${l.name}`}
+                    disabled={isSecureDemo}
                     onClick={() => deleteLiability(l.id)}
                   >
                     <Trash2 className="size-4 text-destructive" />

@@ -6,6 +6,7 @@ import { StatusBadge } from "@/components/common/StatusBadge";
 import { DemoNotice } from "@/components/common/DemoNotice";
 import { Button } from "@/components/ui/button";
 import { demoProfessionals, demoServiceRequests, memberById } from "@/data/demo";
+import { useFamily } from "@/data/store";
 import { formatDateIN } from "@/lib/format";
 
 export const Route = createFileRoute("/services")({
@@ -43,12 +44,13 @@ const categories = [
 ];
 
 function ServicesPage() {
+  const { isSecureDemo } = useFamily();
   return (
     <AppShell>
       <PageHeader
         title="Get the right professional when your family needs one."
         description="FamilyOS coordinates the engagement. It does not provide legal, tax, insurance or investment advice itself."
-        action={<Button>Request a service</Button>}
+        action={<Button disabled={isSecureDemo}>Request a service</Button>}
       />
 
       <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-2">
@@ -84,10 +86,10 @@ function ServicesPage() {
               <Row label="Indicative fee" value={p.indicativeFee} />
             </dl>
             <div className="mt-4 flex gap-2">
-              <Button variant="outline" size="sm" className="flex-1">
+              <Button variant="outline" size="sm" className="flex-1" disabled={isSecureDemo}>
                 View profile
               </Button>
-              <Button size="sm" className="flex-1">
+              <Button size="sm" className="flex-1" disabled={isSecureDemo}>
                 Request service
               </Button>
             </div>

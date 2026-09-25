@@ -9,6 +9,7 @@ import { DemoNotice } from "@/components/common/DemoNotice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { demoDocuments, memberById } from "@/data/demo";
+import { useFamily } from "@/data/store";
 import { formatDateIN } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
@@ -47,6 +48,7 @@ const categories = [
 ];
 
 function VaultPage() {
+  const { isSecureDemo } = useFamily();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
 
@@ -66,7 +68,7 @@ function VaultPage() {
         title="Document vault"
         description="Every important family document in one categorised, access-controlled place."
         action={
-          <Button>
+          <Button disabled={isSecureDemo}>
             <Upload className="size-4" /> Upload document
           </Button>
         }
@@ -136,7 +138,13 @@ function VaultPage() {
             title="No documents match"
             description="Try a different search term or category. You can also upload a new document to this category."
             action={
-              <Button variant="outline" onClick={() => { setQuery(""); setCategory("All"); }}>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setQuery("");
+                  setCategory("All");
+                }}
+              >
                 Clear filters
               </Button>
             }

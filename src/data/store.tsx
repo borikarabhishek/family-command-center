@@ -36,6 +36,7 @@ import {
   netWorthTrend as demoTrend,
 } from "./demo";
 import { addDaysISO, todayISO } from "@/lib/format";
+import { secureDemoMessage } from "@/lib/security";
 
 export interface AppData {
   family: Family;
@@ -52,8 +53,6 @@ export interface AppData {
   conversations: Conversation[];
   trend: { month: string; value: number }[];
 }
-
-const STORAGE_KEY = "familyos.v2";
 
 function seed(): AppData {
   return {
@@ -112,6 +111,8 @@ const uid = (p: string) => `${p}_${Math.random().toString(36).slice(2, 9)}`;
 
 interface FamilyContextValue extends AppData {
   hydrated: boolean;
+  isSecureDemo: boolean;
+  securityNotice: string;
   memberById: (id?: string) => FamilyMember | undefined;
   professionalById: (id?: string) => Professional | undefined;
   requestById: (id?: string) => ServiceRequest | undefined;
@@ -156,28 +157,12 @@ interface FamilyContextValue extends AppData {
 const FamilyContext = createContext<FamilyContextValue | null>(null);
 
 export function FamilyProvider({ children }: { children: ReactNode }) {
-  // Always render the seeded data first so SSR and the first client render match.
   const [data, setData] = useState<AppData>(() => seed());
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) setData({ ...seed(), ...(JSON.parse(raw) as AppData) });
-    } catch {
-      /* ignore corrupt storage */
-    }
     setHydrated(true);
   }, []);
-
-  useEffect(() => {
-    if (!hydrated) return;
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    } catch {
-      /* storage unavailable */
-    }
-  }, [data, hydrated]);
 
   const patch = useCallback((fn: (d: AppData) => AppData) => setData((d) => fn(d)), []);
 
@@ -205,6 +190,8 @@ export function FamilyProvider({ children }: { children: ReactNode }) {
     return {
       ...data,
       hydrated,
+      isSecureDemo: true,
+      securityNotice: secureDemoMessage,
       memberById,
       professionalById,
       requestById,
@@ -242,7 +229,10 @@ export function FamilyProvider({ children }: { children: ReactNode }) {
         })),
 
       saveAsset: (a) =>
-        patch((d) => ({ ...d, assets: upsert(d.assets, { ...a, id: a.id ?? uid("ast") } as Asset) })),
+        patch((d) => ({
+          ...d,
+          assets: upsert(d.assets, { ...a, id: a.id ?? uid("ast") } as Asset),
+        })),
       deleteAsset: (id) => patch((d) => ({ ...d, assets: d.assets.filter((a) => a.id !== id) })),
 
       saveLiability: (l) =>
@@ -262,7 +252,10 @@ export function FamilyProvider({ children }: { children: ReactNode }) {
         patch((d) => ({ ...d, documents: d.documents.filter((x) => x.id !== id) })),
 
       saveTask: (t) =>
-        patch((d) => ({ ...d, tasks: upsert(d.tasks, { ...t, id: t.id ?? uid("tsk") } as FamilyTask) })),
+        patch((d) => ({
+          ...d,
+          tasks: upsert(d.tasks, { ...t, id: t.id ?? uid("tsk") } as FamilyTask),
+        })),
       deleteTask: (id) => patch((d) => ({ ...d, tasks: d.tasks.filter((t) => t.id !== id) })),
 
       createRequest: (r) => {

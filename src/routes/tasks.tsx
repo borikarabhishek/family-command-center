@@ -7,6 +7,7 @@ import { DemoNotice } from "@/components/common/DemoNotice";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { demoApprovals, demoTasks, memberById } from "@/data/demo";
+import { useFamily } from "@/data/store";
 import { formatDateIN, formatINR } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/tasks")({
 const filters = ["All", "To Do", "In Progress", "Waiting", "Completed"];
 
 function TasksPage() {
+  const { isSecureDemo } = useFamily();
   const [filter, setFilter] = useState("All");
   const tasks = demoTasks.filter((t) => filter === "All" || t.status === filter);
 
@@ -40,7 +42,7 @@ function TasksPage() {
       <PageHeader
         title="Tasks & approvals"
         description="What the family needs to act on, and what needs the owner's decision."
-        action={<Button>Create task</Button>}
+        action={<Button disabled={isSecureDemo}>Create task</Button>}
       />
 
       <Tabs defaultValue="tasks">
@@ -78,8 +80,7 @@ function TasksPage() {
                 <div>
                   <p className="font-medium">{t.title}</p>
                   <p className="text-xs text-muted-foreground">
-                    {t.category} · {memberById(t.assigneeId)?.name} · due{" "}
-                    {formatDateIN(t.dueDate)}
+                    {t.category} · {memberById(t.assigneeId)?.name} · due {formatDateIN(t.dueDate)}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -106,11 +107,13 @@ function TasksPage() {
               </div>
               <p className="mt-3 text-sm text-muted-foreground">{a.detail}</p>
               <div className="mt-4 flex flex-wrap gap-2">
-                <Button size="sm">Approve</Button>
-                <Button size="sm" variant="outline">
+                <Button size="sm" disabled={isSecureDemo}>
+                  Approve
+                </Button>
+                <Button size="sm" variant="outline" disabled={isSecureDemo}>
                   Reject
                 </Button>
-                <Button size="sm" variant="ghost">
+                <Button size="sm" variant="ghost" disabled={isSecureDemo}>
                   View details
                 </Button>
               </div>
