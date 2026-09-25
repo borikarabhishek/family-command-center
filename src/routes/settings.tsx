@@ -28,9 +28,9 @@ export const Route = createFileRoute("/settings")({
 });
 
 function SettingsPage() {
-  const [twoFactor] = useState(true);
-  const [biometric] = useState(false);
-  const [sharing] = useState(true);
+  const [twoFactor, setTwoFactor] = useState(true);
+  const [biometric, setBiometric] = useState(false);
+  const [sharing, setSharing] = useState(true);
   const { family, members, isSecureDemo } = useFamily();
 
   return (
@@ -59,7 +59,7 @@ function SettingsPage() {
               label="Two-factor authentication"
               hint="Required for the family owner."
               checked={twoFactor}
-              onChange={() => undefined}
+              onChange={setTwoFactor}
               disabled={isSecureDemo}
             />
             <Toggle
@@ -67,7 +67,7 @@ function SettingsPage() {
               label="Biometric login"
               hint="Use Face ID or fingerprint on mobile."
               checked={biometric}
-              onChange={() => undefined}
+              onChange={setBiometric}
               disabled={isSecureDemo}
             />
             <Toggle
@@ -75,7 +75,7 @@ function SettingsPage() {
               label="Professional data sharing"
               hint="Professionals only see records approved for their matter."
               checked={sharing}
-              onChange={() => undefined}
+              onChange={setSharing}
               disabled={isSecureDemo}
             />
             <Button variant="outline" size="sm" disabled={isSecureDemo}>

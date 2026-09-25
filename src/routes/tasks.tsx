@@ -118,7 +118,7 @@ function TasksPage() {
                 <Button size="sm" variant="outline" disabled={isSecureDemo} {...secureDemoProps}>
                   Reject
                 </Button>
-                <Button size="sm" variant="ghost" disabled={isSecureDemo} {...secureDemoProps}>
+                <Button size="sm" variant="ghost">
                   View details
                 </Button>
               </div>

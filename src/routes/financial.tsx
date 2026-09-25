@@ -276,10 +276,7 @@ function FinancialPage() {
                     aria-label={`Delete ${a.name}`}
                     disabled={isSecureDemo}
                     {...secureDemoProps}
-                    onClick={() => {
-                      if (isSecureDemo) return;
-                      deleteAsset(a.id);
-                    }}
+                    onClick={() => deleteAsset(a.id)}
                   >
                     <Trash2 className="size-4 text-destructive" />
                   </Button>
@@ -345,10 +342,7 @@ function FinancialPage() {
                     aria-label={`Delete ${l.name}`}
                     disabled={isSecureDemo}
                     {...secureDemoProps}
-                    onClick={() => {
-                      if (isSecureDemo) return;
-                      deleteLiability(l.id);
-                    }}
+                    onClick={() => deleteLiability(l.id)}
                   >
                     <Trash2 className="size-4 text-destructive" />
                   </Button>
