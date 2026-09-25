@@ -1,4 +1,15 @@
-export function renderErrorPage(): string {
+function escapeHtmlAttribute(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+export function renderErrorPage(retryHref = "/"): string {
+  const safeRetryHref = escapeHtmlAttribute(retryHref);
+
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -21,7 +32,7 @@ export function renderErrorPage(): string {
       <h1>This page didn't load</h1>
       <p>Something went wrong on our end. You can try refreshing or head back home.</p>
       <div class="actions">
-        <button class="primary" onclick="location.reload()">Try again</button>
+        <a class="primary" href="${safeRetryHref}">Try again</a>
         <a class="secondary" href="/">Go home</a>
       </div>
     </div>

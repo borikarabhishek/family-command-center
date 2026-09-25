@@ -5,7 +5,8 @@ import { PageHeader } from "@/components/common/PageHeader";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { DemoNotice } from "@/components/common/DemoNotice";
 import { Button } from "@/components/ui/button";
-import { demoDocuments, demoFamily, demoMembers, demoTasks } from "@/data/demo";
+import { useFamily } from "@/data/store";
+import { demoDocuments, demoTasks } from "@/data/demo";
 import { ageFromDOB, initials } from "@/lib/format";
 
 export const Route = createFileRoute("/family/")({
@@ -28,20 +29,22 @@ export const Route = createFileRoute("/family/")({
 });
 
 function FamilyPage() {
+  const { isSecureDemo, family, members } = useFamily();
+  const secureDemoProps = isSecureDemo ? { "aria-describedby": "secure-demo-notice" } : {};
   return (
     <AppShell>
       <PageHeader
-        title={demoFamily.name}
-        description={`${demoMembers.length} members · ${demoFamily.city} · workspace created ${demoFamily.createdAt}`}
+        title={family.name}
+        description={`${members.length} members · ${family.city} · workspace created ${family.createdAt}`}
         action={
-          <Button>
+          <Button disabled={isSecureDemo} {...secureDemoProps}>
             <UserPlus className="size-4" /> Add family member
           </Button>
         }
       />
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        {demoMembers.map((m) => {
+        {members.map((m) => {
           const docs = demoDocuments.filter((d) => d.ownerId === m.id).length;
           const tasks = demoTasks.filter(
             (t) => t.assigneeId === m.id && t.status !== "Completed",

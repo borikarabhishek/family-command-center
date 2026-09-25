@@ -6,6 +6,7 @@ import { StatusBadge } from "@/components/common/StatusBadge";
 import { DemoNotice } from "@/components/common/DemoNotice";
 import { Button } from "@/components/ui/button";
 import { demoProfessionals, demoServiceRequests, memberById } from "@/data/demo";
+import { useFamily } from "@/data/store";
 import { formatDateIN } from "@/lib/format";
 
 export const Route = createFileRoute("/services")({
@@ -43,12 +44,18 @@ const categories = [
 ];
 
 function ServicesPage() {
+  const { isSecureDemo } = useFamily();
+  const secureDemoProps = isSecureDemo ? { "aria-describedby": "secure-demo-notice" } : {};
   return (
     <AppShell>
       <PageHeader
         title="Get the right professional when your family needs one."
         description="FamilyOS coordinates the engagement. It does not provide legal, tax, insurance or investment advice itself."
-        action={<Button>Request a service</Button>}
+        action={
+          <Button disabled={isSecureDemo} {...secureDemoProps}>
+            Request a service
+          </Button>
+        }
       />
 
       <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-2">
@@ -87,7 +94,7 @@ function ServicesPage() {
               <Button variant="outline" size="sm" className="flex-1">
                 View profile
               </Button>
-              <Button size="sm" className="flex-1">
+              <Button size="sm" className="flex-1" disabled={isSecureDemo} {...secureDemoProps}>
                 Request service
               </Button>
             </div>

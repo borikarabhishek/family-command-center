@@ -8,13 +8,14 @@ import {
   MessageSquare,
   Settings,
   ShieldCheck,
+  ShieldAlert,
   Users,
   Briefcase,
   ListChecks,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { demoFamily } from "@/data/demo";
+import { useFamily } from "@/data/store";
 
 const desktopNav = [
   { to: "/dashboard", label: "Dashboard", icon: Home },
@@ -37,6 +38,7 @@ const mobileNav = [
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { family, isSecureDemo, securityNotice } = useFamily();
 
   return (
     <div className="min-h-screen bg-background">
@@ -70,7 +72,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className="border-t border-sidebar-border px-6 py-4 text-xs text-sidebar-foreground/70">
           <p className="flex items-center gap-2">
             <ShieldCheck className="size-3.5 text-sidebar-primary" />
-            {demoFamily.name}
+            {family.name}
           </p>
           <p className="mt-1">Prototype workspace · simulated data</p>
         </div>
@@ -81,7 +83,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="flex items-center justify-between px-4 py-3">
             <div>
               <p className="font-display text-lg leading-none">FamilyOS</p>
-              <p className="mt-1 text-[11px] text-muted-foreground">{demoFamily.name}</p>
+              <p className="mt-1 text-[11px] text-muted-foreground">{family.name}</p>
             </div>
             <Link
               to="/settings"
@@ -94,6 +96,12 @@ export function AppShell({ children }: { children: ReactNode }) {
         </header>
 
         <main className="mx-auto w-full max-w-6xl px-4 pb-28 pt-5 sm:px-6 lg:px-10 lg:pb-16 lg:pt-8">
+          {isSecureDemo ? (
+            <div className="mb-5 flex items-start gap-3 rounded-lg border border-warning/30 bg-warning/10 px-4 py-3 text-sm text-foreground">
+              <ShieldAlert className="mt-0.5 size-4 shrink-0 text-warning" />
+              <p id="secure-demo-notice">{securityNotice}</p>
+            </div>
+          ) : null}
           {children}
         </main>
       </div>
