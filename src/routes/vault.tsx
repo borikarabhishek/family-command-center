@@ -49,6 +49,7 @@ const categories = [
 
 function VaultPage() {
   const { isSecureDemo } = useFamily();
+  const secureDemoProps = isSecureDemo ? { "aria-describedby": "secure-demo-notice" } : {};
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
 
@@ -68,7 +69,7 @@ function VaultPage() {
         title="Document vault"
         description="Every important family document in one categorised, access-controlled place."
         action={
-          <Button disabled={isSecureDemo}>
+          <Button disabled={isSecureDemo} {...secureDemoProps}>
             <Upload className="size-4" /> Upload document
           </Button>
         }

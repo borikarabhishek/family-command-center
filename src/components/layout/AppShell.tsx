@@ -99,7 +99,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           {isSecureDemo ? (
             <div className="mb-5 flex items-start gap-3 rounded-lg border border-warning/30 bg-warning/10 px-4 py-3 text-sm text-foreground">
               <ShieldAlert className="mt-0.5 size-4 shrink-0 text-warning" />
-              <p>{securityNotice}</p>
+              <p id="secure-demo-notice">{securityNotice}</p>
             </div>
           ) : null}
           {children}

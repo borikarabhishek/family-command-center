@@ -29,9 +29,19 @@ const SECURITY_HEADERS: Readonly<Record<string, string>> = {
 export const secureDemoMessage =
   "Secure demo mode: data stays in memory for this tab only, and privileged actions remain disabled until a real authenticated backend is connected.";
 
+function shouldSendHsts(requestUrl: string): boolean {
+  const { protocol, hostname } = new URL(requestUrl);
+  if (protocol !== "https:") return false;
+
+  const localHosts = new Set(["localhost", "127.0.0.1", "::1"]);
+  return (
+    !localHosts.has(hostname) && !hostname.endsWith(".localhost") && !hostname.endsWith(".local")
+  );
+}
+
 export function buildSecurityHeaders(requestUrl: string): Headers {
   const headers = new Headers(SECURITY_HEADERS);
-  if (requestUrl.startsWith("https://")) {
+  if (shouldSendHsts(requestUrl)) {
     headers.set("strict-transport-security", "max-age=31536000; includeSubDomains");
   }
   return headers;

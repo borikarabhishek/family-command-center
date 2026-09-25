@@ -60,6 +60,7 @@ function FinancialPage() {
     members,
     isSecureDemo,
   } = useFamily();
+  const secureDemoProps = isSecureDemo ? { "aria-describedby": "secure-demo-notice" } : {};
 
   const byCategory = Object.entries(
     assets.reduce<Record<string, number>>((acc, a) => {
@@ -86,14 +87,19 @@ function FinancialPage() {
           <div className="flex gap-2">
             <AssetFormDialog
               trigger={
-                <Button size="sm" disabled={noMembers || isSecureDemo}>
+                <Button size="sm" disabled={noMembers || isSecureDemo} {...secureDemoProps}>
                   <Plus className="size-4" /> Asset
                 </Button>
               }
             />
             <LiabilityFormDialog
               trigger={
-                <Button size="sm" variant="outline" disabled={noMembers || isSecureDemo}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={noMembers || isSecureDemo}
+                  {...secureDemoProps}
+                >
                   <Plus className="size-4" /> Liability
                 </Button>
               }
@@ -226,7 +232,7 @@ function FinancialPage() {
               action={
                 <AssetFormDialog
                   trigger={
-                    <Button disabled={noMembers || isSecureDemo}>
+                    <Button disabled={noMembers || isSecureDemo} {...secureDemoProps}>
                       <Plus className="size-4" /> Add asset
                     </Button>
                   }
@@ -258,6 +264,7 @@ function FinancialPage() {
                         variant="ghost"
                         aria-label={`Edit ${a.name}`}
                         disabled={isSecureDemo}
+                        {...secureDemoProps}
                       >
                         <Pencil className="size-4" />
                       </Button>
@@ -268,7 +275,11 @@ function FinancialPage() {
                     variant="ghost"
                     aria-label={`Delete ${a.name}`}
                     disabled={isSecureDemo}
-                    onClick={() => deleteAsset(a.id)}
+                    {...secureDemoProps}
+                    onClick={() => {
+                      if (isSecureDemo) return;
+                      deleteAsset(a.id);
+                    }}
                   >
                     <Trash2 className="size-4 text-destructive" />
                   </Button>
@@ -290,7 +301,7 @@ function FinancialPage() {
               action={
                 <LiabilityFormDialog
                   trigger={
-                    <Button disabled={noMembers || isSecureDemo}>
+                    <Button disabled={noMembers || isSecureDemo} {...secureDemoProps}>
                       <Plus className="size-4" /> Add liability
                     </Button>
                   }
@@ -322,6 +333,7 @@ function FinancialPage() {
                         variant="ghost"
                         aria-label={`Edit ${l.name}`}
                         disabled={isSecureDemo}
+                        {...secureDemoProps}
                       >
                         <Pencil className="size-4" />
                       </Button>
@@ -332,7 +344,11 @@ function FinancialPage() {
                     variant="ghost"
                     aria-label={`Delete ${l.name}`}
                     disabled={isSecureDemo}
-                    onClick={() => deleteLiability(l.id)}
+                    {...secureDemoProps}
+                    onClick={() => {
+                      if (isSecureDemo) return;
+                      deleteLiability(l.id);
+                    }}
                   >
                     <Trash2 className="size-4 text-destructive" />
                   </Button>

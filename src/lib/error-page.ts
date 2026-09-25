@@ -1,4 +1,4 @@
-export function renderErrorPage(): string {
+export function renderErrorPage(retryHref = "/"): string {
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -21,7 +21,7 @@ export function renderErrorPage(): string {
       <h1>This page didn't load</h1>
       <p>Something went wrong on our end. You can try refreshing or head back home.</p>
       <div class="actions">
-        <a class="primary" href="">Try again</a>
+        <a class="primary" href="${retryHref}">Try again</a>
         <a class="secondary" href="/">Go home</a>
       </div>
     </div>

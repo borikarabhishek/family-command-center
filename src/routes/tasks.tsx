@@ -34,6 +34,7 @@ const filters = ["All", "To Do", "In Progress", "Waiting", "Completed"];
 
 function TasksPage() {
   const { isSecureDemo } = useFamily();
+  const secureDemoProps = isSecureDemo ? { "aria-describedby": "secure-demo-notice" } : {};
   const [filter, setFilter] = useState("All");
   const tasks = demoTasks.filter((t) => filter === "All" || t.status === filter);
 
@@ -42,7 +43,11 @@ function TasksPage() {
       <PageHeader
         title="Tasks & approvals"
         description="What the family needs to act on, and what needs the owner's decision."
-        action={<Button disabled={isSecureDemo}>Create task</Button>}
+        action={
+          <Button disabled={isSecureDemo} {...secureDemoProps}>
+            Create task
+          </Button>
+        }
       />
 
       <Tabs defaultValue="tasks">
@@ -107,13 +112,13 @@ function TasksPage() {
               </div>
               <p className="mt-3 text-sm text-muted-foreground">{a.detail}</p>
               <div className="mt-4 flex flex-wrap gap-2">
-                <Button size="sm" disabled={isSecureDemo}>
+                <Button size="sm" disabled={isSecureDemo} {...secureDemoProps}>
                   Approve
                 </Button>
-                <Button size="sm" variant="outline" disabled={isSecureDemo}>
+                <Button size="sm" variant="outline" disabled={isSecureDemo} {...secureDemoProps}>
                   Reject
                 </Button>
-                <Button size="sm" variant="ghost" disabled={isSecureDemo}>
+                <Button size="sm" variant="ghost" disabled={isSecureDemo} {...secureDemoProps}>
                   View details
                 </Button>
               </div>

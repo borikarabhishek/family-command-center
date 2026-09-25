@@ -47,6 +47,9 @@ function isH3SwallowedErrorBody(body: string): boolean {
 
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
+    const requestUrl = new URL(request.url);
+    const retryHref = `${requestUrl.pathname}${requestUrl.search}${requestUrl.hash}` || "/";
+
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
@@ -54,7 +57,7 @@ export default {
     } catch (error) {
       console.error(error);
       return withSecurityHeaders(
-        new Response(renderErrorPage(), {
+        new Response(renderErrorPage(retryHref), {
           status: 500,
           headers: { "content-type": "text/html; charset=utf-8" },
         }),
